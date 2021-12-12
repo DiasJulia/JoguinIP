@@ -2,7 +2,7 @@
 
 #define MAX_BUILDINGS   100
 
-int main(void)
+int main2(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -57,8 +57,6 @@ int main(void)
         // Player movement  (adicionar jump e slide)
         if (IsKeyDown(KEY_RIGHT)) player.x += 50;
         else if (IsKeyDown(KEY_LEFT)) player.x -= 50;
-
-        if (IsKeyDown(KEY_UP)) player.y += 50;
 
         // Camera target follows player
         camera.target = (Vector2){ player.x + 20, player.y + 20 };
