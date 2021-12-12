@@ -1,13 +1,4 @@
-/*******************************************************************************************
-*
-*   raylib [textures] example - Background scrolling
-*
-*   This example has been created using raylib 2.0 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2019 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
+
 
 #include "raylib.h"
 #define NUM_FRAMES  3  
@@ -38,31 +29,7 @@ int main(void)
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
     
     
-   ///////////////////////////////////////DEFINIÇÕES BOTAO////////////////////////////////////////////////////////////////////// 
-      InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite button");
-
-    InitAudioDevice();      // Initialize audio device
-
-    Sound fxButton = LoadSound("resources/buttonfx.wav");   // Load button sound
-    Texture2D button = LoadTexture("resources/button.png"); // Load button texture
-
-    // Define frame rectangle for drawing
-    float frameHeight = (float)button.height/NUM_FRAMES;
-    Rectangle sourceRec = { 0, 0, (float)button.width, frameHeight };
-
-    // Define button bounds on screen
-    Rectangle btnBounds = { screenWidth/2.0f - button.width/2.0f, screenHeight/2.0f - button.height/NUM_FRAMES/2.0f, (float)button.width, frameHeight };
-
-    int btnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-    bool btnAction = false;         // Button action should be activated
-
-    Vector2 mousePoint = { 0.0f, 0.0f };
-
-
-
-    SetTargetFPS(60); 
-    
-    
+  
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Main game loop
@@ -84,31 +51,6 @@ int main(void)
         //----------------------------------------------------------------------------------
         
         
-        ///////////////////////////////BOTAO///////////////////////////////////////////
-        mousePoint = GetMousePosition();
-        btnAction = false;
-
-        // Check button state
-        if (CheckCollisionPointRec(mousePoint, btnBounds))
-        {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) btnState = 2;
-            else btnState = 1;
-
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) btnAction = true;
-        }
-        else btnState = 0;
-
-        if (btnAction)
-        {
-            PlaySound(fxButton);
-
-            // TODO: Any desired action
-        }
-
-        // Calculate button frame rectangle to draw depending on button state
-        sourceRec.y = btnState*frameHeight;
-        //----------------------------------------------------------------------------------
-
       
       
       
@@ -131,12 +73,7 @@ int main(void)
             /////////////////////TEXTO//////////////////////////////
             DrawText("INICIAR O JOGO", 200, 100, 50, WHITE);
           
-          
-          ///////////////////////BOTAO///////////////////////////////////
-          
-
-            DrawTextureRec(button, sourceRec, (Vector2){ btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
-  ClearBackground(RAYWHITE);
+         
 
         EndDrawing();
         
@@ -153,10 +90,7 @@ int main(void)
     UnloadTexture(background);  // Unload background texture
     UnloadTexture(midground);   // Unload midground texture
     UnloadTexture(foreground);  // Unload foreground texture
-    UnloadTexture(button);  // Unload button texture
-    UnloadSound(fxButton);  // Unload sound
-    
-     CloseAudioDevice();     // Close audio device
+   
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
