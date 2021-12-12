@@ -18,7 +18,7 @@
 
 #define VELOCITY    0.5f
 
-int main(void)
+int main3(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
