@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #define NUM_FRAMES  3  
-int main(void)
+int main554(void)
 {
     //////////////////////////////////// Initialization //////////////////////////////////////////////
     
@@ -11,7 +11,7 @@ int main(void)
 
 
 
-////////////////////////////////DEFINIÇÕES BACKGROUND ////////////////////////////////////////////////////////////////////
+////////////////////////////////DEFINIï¿½ï¿½ES BACKGROUND ////////////////////////////////////////////////////////////////////
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - background scrolling");
   
 
@@ -76,15 +76,7 @@ int main(void)
          
 
         EndDrawing();
-        
-        
-        
-      
     }
-    
-   
-  
-
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(background);  // Unload background texture
@@ -93,15 +85,5 @@ int main(void)
    
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
     return 0;
 }

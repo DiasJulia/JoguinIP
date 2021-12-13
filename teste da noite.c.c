@@ -14,7 +14,7 @@
 #define NUM_FRAMES  3       // Number of frames (rectangles) for the button sprite texture
 #define MAX_BUILDINGS 100
 
-int main(void)
+int mainklk(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -26,8 +26,8 @@ int main(void)
     InitAudioDevice();      // Initialize audio device
 
     Sound fxButton = LoadSound("resources/buttonfx.wav");   // Load button sound
-    Texture2D button = LoadTexture("resources/julia quem consertou.png"); // Load button texture
-    Texture2D texture = LoadTexture("resources/cyberpunk_street_background.png"); // background texture
+    Texture2D button = LoadTexture("resources/btn-bg.png"); // Load button texture
+    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height/NUM_FRAMES;
