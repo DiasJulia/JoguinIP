@@ -102,7 +102,10 @@ int maintestzin(void)
                     int jj = (((j + 1) < vertexCount) ? (j + 1) : 0);   // Get next vertex or first to close the shape
                     Vector2 vertexB = GetPhysicsShapeVertex(body, jj);
 
-                    DrawLineV(vertexA, vertexB, BLACK);     // Draw a line between two vertex positions
+                    if(i == 5){ // 5 == numero do objeto body
+                        DrawLineV(vertexA, vertexB, BLANK); //BLANK == transparente
+                    } 
+                    else  DrawLineV(vertexA, vertexB, GREEN);
                 }
             }
 
