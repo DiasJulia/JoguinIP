@@ -21,7 +21,7 @@ int main(void)
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
     Rectangle sourceRec = {0, 0, (float)button.width, frameHeight};
-    Rectangle sourceRecRunner = {0, 0, (float)runner.width/5.8, (float)runner.height};
+    Rectangle sourceRecRunner = {0, 0, (float)runner.width/6.05, (float)runner.height};
 
     // Define button bounds on screen
     Rectangle btnBounds = {screenWidth / 2.0f - button.width / 2.0f, screenHeight / 2.0f - button.height / NUM_FRAMES / 2.0f, (float)button.width, frameHeight};
