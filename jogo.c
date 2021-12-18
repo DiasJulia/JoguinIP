@@ -5,7 +5,7 @@
 
 #define VELOCITY 0.5f
 
-int main(void)
+int mainofc(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -14,9 +14,9 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite button");
 
-    Texture2D button = LoadTexture("resources/btn-bg.png");             // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png");           // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");             // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png");           // background texture
+    Texture2D runner = LoadTexture("resources/personagens/runner5.png"); // Runner texture
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
