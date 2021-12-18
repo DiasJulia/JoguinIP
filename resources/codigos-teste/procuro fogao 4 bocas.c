@@ -34,10 +34,10 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
+    Texture2D runner = LoadTexture("resources/img/personagens/runner.png"); // Runner texture
 
     Rectangle sourceRecRunner = {0, 0, (float)runner.width/6.05, (float)runner.height};
 

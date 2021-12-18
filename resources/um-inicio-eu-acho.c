@@ -23,7 +23,7 @@ void aumentar(PhysicsBody *body){
     (*body)->isGrounded = isGrounded;
 }
 
-int mainteste(void)
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -34,9 +34,9 @@ int mainteste(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;

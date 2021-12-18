@@ -5,25 +5,7 @@
 
 #define VELOCITY 0.5f
 
-void abaixar(PhysicsBody *body){
-    Vector2 position = (*body)->position;
-    int isGrounded = (*body)->isGrounded;
-    DestroyPhysicsBody(*body);
-
-    *body = CreatePhysicsBodyRectangle(position, 50, 25, 1);
-    (*body)->isGrounded = isGrounded;
-}
-
-void aumentar(PhysicsBody *body){
-    Vector2 position = (*body)->position;
-    int isGrounded = (*body)->isGrounded;
-    DestroyPhysicsBody(*body);
-
-    *body = CreatePhysicsBodyRectangle(position, 50, 50, 1);
-    (*body)->isGrounded = isGrounded;
-}
-
-int main(void)
+int mainddd(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -34,9 +16,9 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/caixote.png");
 
@@ -111,7 +93,7 @@ int main(void)
     camera.zoom = 0.5f;
 
     SetTargetFPS(60);
-    //Animations
+    //Animations-------------------------------
     float runnerWidth = (float)runner.width/6.0;
     int runnerFrames = 6;
     float runnertimer= 0.0f;
