@@ -7,7 +7,7 @@
 
 #define VELOCITY    0.5f
 
-int maintestzin(void)
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -18,6 +18,7 @@ int maintestzin(void)
     InitWindow(screenWidth, screenHeight, "alo alo, teste.mp4");
 
     Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
+    Texture2D texture = LoadTexture("resources/cenario.png"); // city texture
 
     // Physac logo drawing position
     int logoX = screenWidth - MeasureText("Physac", 30) - 10;
@@ -85,7 +86,7 @@ int maintestzin(void)
             ClearBackground(BLACK);
 
             DrawFPS(screenWidth - 90, screenHeight - 30);
-
+            DrawTexture(texture, 0, 0, WHITE);
             // Draw created physics bodies
             int bodiesCount = GetPhysicsBodiesCount();
             for (int i = 0; i < bodiesCount; i++)
@@ -102,10 +103,7 @@ int maintestzin(void)
                     int jj = (((j + 1) < vertexCount) ? (j + 1) : 0);   // Get next vertex or first to close the shape
                     Vector2 vertexB = GetPhysicsShapeVertex(body, jj);
 
-                    if(i == 5){ // 5 == numero do objeto body
-                        DrawLineV(vertexA, vertexB, BLANK); //BLANK == transparente
-                    } 
-                    else  DrawLineV(vertexA, vertexB, GREEN);
+                    DrawLineV(vertexA, vertexB, BLANK);
                 }
             }
 
@@ -126,7 +124,11 @@ int maintestzin(void)
             sourceRecRunner.x = runnerWidth * runnerFrame;
 
             DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
-          //  DrawRectangle(screenWidth/2.0f, (float)screenHeight/2, (float)screenWidth/2, 100, RED);
+            DrawRectangle(screenWidth*0.25f - screenWidth*0.25f/2, screenHeight*0.6f - 5, screenWidth*0.25f, 10, LIGHTGRAY);
+            DrawRectangle(screenWidth*0.75f - screenWidth*0.25f/2, screenHeight*0.6f - 5, screenWidth*0.25f, 10, LIGHTGRAY);
+            DrawRectangle(screenWidth/2.0f - (float)screenWidth/2, (float)screenHeight - 50, (float)screenWidth, 100, LIGHTGRAY);
+            //pela biblioteca os dois primeiros argumentos são coordenadas do centro da figura, para desenhar em cima 
+            //dela eu estou subtraindo metade do comprimento do bloco e da altura do bloco
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -135,6 +137,7 @@ int maintestzin(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(runner);
+    UnloadTexture(texture);
     ClosePhysics();       // Unitialize physics
 
     CloseWindow();        // Close window and OpenGL context
