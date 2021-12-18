@@ -39,13 +39,13 @@ int main(void)
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");            // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");          // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png");        // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner8.png"); // Runner texture
+    Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/ddd.png");
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
     Rectangle sourceRec = {0, 0, (float)button.width, frameHeight};
-    Rectangle sourceRecRunner = {0, 0, (float)runner.width / 7.5, (float)runner.height};
+    Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
     // Define button bounds on screen
     Rectangle btnBounds = {screenWidth / 2.0f - button.width / 2.0f, screenHeight / 2.0f - button.height / NUM_FRAMES / 2.0f, (float)button.width, frameHeight};
@@ -56,7 +56,7 @@ int main(void)
     Vector2 mousePoint = {0.0f, 0.0f};
 
     //Animations
-    float runnerWidth = (float)runner.width / 7.2;
+    float runnerWidth = (float)runner.width / 10.4;
     int runnerFrames = 6;
     float runnertimer = 0.0f;
     int runnerFrame = 0;
@@ -71,7 +71,7 @@ int main(void)
     PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight + 100}, 2000, 100, 10);
     PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1000, (float)screenHeight - 100}, 250, 120, 10);
     PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 500, (float)screenHeight - 100}, 100, 100, 10);
-    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
+    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 280}, 50, 300, 10);
     PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
     PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2600, (float)screenHeight}, 100, 100, 10);
     PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
@@ -221,7 +221,18 @@ int main(void)
             }
             else
             {
-                sourceRecRunner.x = runnerWidth * runnerFrame;
+
+                DrawText(TextFormat("Score: %i", body->velocity.y), 10, 10, 10, WHITE);
+                if(body->velocity.y<0){
+                    sourceRecRunner.x = runnerWidth * 7.2;
+                } else
+                if ( !body->isGrounded)
+                {
+                    sourceRecRunner.x = runnerWidth * 8.4;
+                } else
+                {
+                    sourceRecRunner.x = runnerWidth * runnerFrame;
+                }
                 DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 80}, WHITE);
             }
 

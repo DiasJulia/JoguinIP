@@ -5,7 +5,8 @@
 
 #define VELOCITY 0.5f
 
-int mainddd(void)
+
+int mainnn(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ int mainddd(void)
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
+    Texture2D runner = LoadTexture("resources/img/personagens/runner.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/caixote.png");
 
     Rectangle sourceRecRunner = {0, 0, (float)runner.width/6.05, (float)runner.height};
@@ -93,7 +94,7 @@ int mainddd(void)
     camera.zoom = 0.5f;
 
     SetTargetFPS(60);
-    //Animations-------------------------------
+    //Animations
     float runnerWidth = (float)runner.width/6.0;
     int runnerFrames = 6;
     float runnertimer= 0.0f;
