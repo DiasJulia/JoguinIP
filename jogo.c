@@ -3,6 +3,7 @@
 #include "extras/physac.h"
 
 #define NUM_FRAMES 3
+#define PHYSAC_IMPLEMENTATION
 
 #define VELOCITY 0.5f
 
