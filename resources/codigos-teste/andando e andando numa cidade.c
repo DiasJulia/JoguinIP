@@ -7,7 +7,7 @@
 
 #define VELOCITY    0.5f
 
-int main(void)
+int mainjuliauquemmandouconsertar(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
