@@ -249,8 +249,10 @@ int main(void)
                 follower->position = (Vector2){body->position.x - 500, body->position.y};
 
                 // Horizontal movement input
-                body->velocity.x = VELOCITY;
-                follower->velocity.x = VELOCITY;
+                if(timeElapsed > 90) {
+                    body->velocity.x = VELOCITY;
+                    follower->velocity.x = VELOCITY;
+                }
                 
                 if(isShortened == 1 && body->isGrounded){
                     body->velocity.x = VELOCITY/1.5;
@@ -279,6 +281,18 @@ int main(void)
                 DrawTexture(caixote, screenWidth / 2.0f + 450, (float)screenHeight - 150, WHITE);
                 DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2, (float)screenHeight - 50, WHITE);
                 DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
+
+                Font fontStart = LoadFont("resources/fonts/mecha.png");
+
+                if(timeElapsed <= 30){
+                    DrawTextEx(fontStart, "3", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else if(timeElapsed <= 60){ //2
+                    DrawTextEx(fontStart, "2", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else if(timeElapsed <= 90){ //1
+                    DrawTextEx(fontStart, "1", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else {
+                    DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 95, 1.5f, YELLOW);
+                }
               
                 // Draw created physics bodies
                 int bodiesCount = GetPhysicsBodiesCount();
