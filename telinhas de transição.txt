@@ -1,0 +1,20 @@
+/*if(fase){
+	BeginDrawing();
+            
+            	ClearBackground(BLACK);
+            	DrawText("CONGRATULATIONS!!", 160, 85, 45, WHITE);
+            	DrawText("O PAGAMENTO FOI FEITO", 190, 200, 30, WHITE);
+            	DrawText("COM SUCESSO!!", 280, 230, 30, WHITE);
+            	DrawText("PRESS [ENTER] to RESTART!", 205, 330, 25, WHITE);
+        
+        EndDrawing();*/
+}
+/*if(lifes==0){        
+        BeginDrawing();
+    
+            ClearBackground(BLACK);
+            DrawText("GAME OVER", 165, 130, 75, WHITE);
+            DrawText("PRESS [ENTER] to RESTART!", 210, 320, 25, WHITE);
+    
+        EndDrawing();*/
+}
