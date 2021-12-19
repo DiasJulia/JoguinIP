@@ -61,7 +61,7 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[128] = "ALO ALO, cabou  a luz\n";
+    const char message[400] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM para o caminho certo e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 3;
 
@@ -216,8 +216,8 @@ int main(void)
 
             DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
 
-            DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
-            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+            DrawText(TextSubtext(message, 0, framesCounter/05), 50, 160, 15, MAROON);
+            DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 230, 300, 20, LIGHTGRAY);
 
         EndDrawing();       
 
@@ -265,7 +265,13 @@ int main(void)
                     lifes--;
                 }
                 if(lifes == 0){
-                    fase = 0;
+                    BeginDrawing();
+    
+                    ClearBackground(BLACK);
+                    DrawText("GAME OVER", 165, 130, 75, WHITE);
+                    DrawText("PRESS [ENTER] to RESTART!", 210, 320, 25, WHITE);
+            
+                    EndDrawing();
                 }
 //*************************************************************************************************
                 if(IsKeyPressed(KEY_DOWN) && !isShortened && body->isGrounded){
@@ -415,7 +421,8 @@ int main(void)
             DrawTexture(texture, 0, 0, WHITE);
 
             DrawTextureRec(button, sourceRec, (Vector2){btnBounds.x, btnBounds.y}, WHITE); // Draw button frame
-            DrawText("INICIAR O JOGO", 200, 100, 50, WHITE);
+            DrawText("SEJA BEM-VINDO AO", 225, 100, 30, WHITE);
+            DrawText("DANIEL PASSA A GENTE!", 200, 150, 30, WHITE);
 
             //DrawText("Espaço: Pular", 300, 100, 50, WHITE);
 
