@@ -7,21 +7,23 @@
 
 #define VELOCITY 0.5f
 
-void abaixar(PhysicsBody *body){
+void abaixar(PhysicsBody *body)
+{
     Vector2 position = (*body)->position;
     int isGrounded = (*body)->isGrounded;
     DestroyPhysicsBody(*body);
 
-    *body = CreatePhysicsBodyRectangle(position, 50, 25, 1);
+    *body = CreatePhysicsBodyRectangle(position, 50, 40, 1);
     (*body)->isGrounded = isGrounded;
 }
 
-void aumentar(PhysicsBody *body){
+void aumentar(PhysicsBody *body)
+{
     Vector2 position = (*body)->position;
     int isGrounded = (*body)->isGrounded;
     DestroyPhysicsBody(*body);
 
-    *body = CreatePhysicsBodyRectangle(position, 50, 50, 1);
+    *body = CreatePhysicsBodyRectangle(position, 50, 80, 1);
     (*body)->isGrounded = isGrounded;
 }
 
@@ -44,7 +46,7 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT);  // NOTE: Try to enable MSAA 4X
+    SetConfigFlags(FLAG_MSAA_4X_HINT); // NOTE: Try to enable MSAA 4X
 
     InitWindow(screenWidth, screenHeight, "teste do jogo / testando");
 
@@ -61,7 +63,7 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[128] = "ALO ALO, cabou  a luz\n";
+    const char message[300] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM para o caminho certo e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 3;
 
@@ -74,8 +76,8 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
-    bool fase = 0; //responsável por terminar o loop de codigo quando a fase terminar
-    bool botaoClicado = 0; //responsável por manter a tea inicial enquanto o botão n for clicado
+    bool fase = 0;          //responsável por terminar o loop de codigo quando a fase terminar
+    bool botaoClicado = 0;  //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
 
@@ -83,7 +85,7 @@ int main(void)
 
     // Initialize physics and default physics bodies
     InitPhysics();
-    
+
     //proporcao barreira e chao
     //em cima *2 + x
     //em baixo *1.5 + x/2
@@ -97,12 +99,12 @@ int main(void)
     PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight + 100}, 2000, 100, 10);
     PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1000, (float)screenHeight - 100}, 100, 100, 10);
     PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 500, (float)screenHeight - 100}, 100, 100, 10);
-    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
-    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 250}, 50, 300, 10);
+    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 150}, 50, 300, 10);
     PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2600, (float)screenHeight}, 100, 100, 10);
-    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 150}, 50, 300, 10);
     PhysicsBody caixa4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3600, (float)screenHeight}, 100, 100, 10);
-    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 150}, 50, 300, 10);
 
     // Disable dynamics to floor and walls physics bodies
     naoSeiONome4->enabled = false;
@@ -129,7 +131,7 @@ int main(void)
     char *texto = NULL;
 
     // Create movement physics body
-    PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
+    PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 80, 1);
     PhysicsBody follower = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
     body->freezeOrient = true; // Constrain body rotation to avoid little collision torque amounts
     follower->freezeOrient = true;
@@ -179,16 +181,15 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
-            Texture2D caixote = LoadTexture("resources/img/caixote.png");
+            Texture2D caixote = LoadTexture("resources/caixote.png");
             Texture2D cenario = LoadTexture("resources/img/cidade.png");
-            Texture2D bricks = LoadTexture("resources/img/bricks.png");
-            Texture2D taxi = LoadTexture("resources/img/taxi.png");
+            Texture2D bricks = LoadTexture("resources/bricks.png");
+            Texture2D taxi = LoadTexture("resources/img/taxi-2.png");
             Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
             Texture2D ufo = LoadTexture("resources/img/navepequena.png");
             Texture2D heart = LoadTexture("resources/img/heart.png");
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
-
             
         Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
@@ -204,24 +205,38 @@ int main(void)
         SetMusicVolume(transicao, (float)0.2);
         timePlayed = 0.0f;
 
-        UpdateMusicStream(transicao);
-        SetMusicPitch(transicao, pitch);
-        timePlayed = GetMusicTimePlayed(transicao)/GetMusicTimeLength(transicao)*(screenWidth - 40);
+            //Animations
+            float runnerWidth = (float)runner.width / 10.4;
+            int runnerFrames = 6;
+            float runnertimer = 0.0f;
+            int runnerFrame = 0;
 
-        if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
-        else framesCounter++;
-        BeginDrawing();
+            while (!IsKeyPressed(KEY_ENTER)) //tela de transição
+            {
+                PlayMusicStream(transicao);
+                SetMusicVolume(transicao, (float)0.2);
+                timePlayed = 0.0f;
+                pause = false;
 
-            ClearBackground(BLACK);
+                UpdateMusicStream(transicao);
+                SetMusicPitch(transicao, pitch);
+                timePlayed = GetMusicTimePlayed(transicao) / GetMusicTimeLength(transicao) * (screenWidth - 40);
 
-            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
+                if (IsKeyDown(KEY_SPACE))
+                    framesCounter += 8;
+                else
+                    framesCounter++;
+                BeginDrawing();
 
-            DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
-            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+                ClearBackground(BLACK);
 
-        EndDrawing();       
+           DrawText(TextSubtext(message, 0, framesCounter/10), 50, 160, 15, MAROON);
 
-        }
+            DrawText("PRESSIONE ENTER PARA JOGAR!", 230, 300, 20, LIGHTGRAY);
+
+
+                EndDrawing();
+            }
             UnloadMusicStream(transicao);
 
             PlayMusicStream(music);
@@ -238,7 +253,7 @@ int main(void)
                 if(timeElapsed == 0) tempoRestante = tempoFase1;
 
                 // Get timePlayed scaled to bar dimensions
-                timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
+                timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
 
                 camera.target = body->position;
                 // Update
@@ -255,6 +270,7 @@ int main(void)
                         timeSlide = 0;
                     }
                 }
+
 //************************************************************************************************
                 if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
@@ -264,56 +280,60 @@ int main(void)
                     SetPhysicsBodyRotation(body, 0);
                     lifes--;
                 }
-                if(lifes == 0){
+                if (lifes == 0)
+                {
                     fase = 0;
                 }
-//*************************************************************************************************
-                if(IsKeyPressed(KEY_DOWN) && !isShortened && body->isGrounded){
+                //*************************************************************************************************
+                if (IsKeyPressed(KEY_DOWN) && body->isGrounded)
+                {
                     abaixar(&body);
-                    isShortened = 1;                   
+                    isShortened = 1;
                 }
 
                 follower->position = (Vector2){body->position.x - 500, body->position.y};
-                
-                if(isShortened == 1 && body->isGrounded){
-                    body->velocity.x = VELOCITY/1.5;
+
+                if (isShortened == 1 && body->isGrounded)
+                {
+                    body->velocity.x = VELOCITY / 1.5;
                 }
 
                 // Vertical movement input checking if player physics body is grounded
                 if (IsKeyDown(KEY_SPACE) && body->isGrounded)
                     body->velocity.y = -VELOCITY * 4;
-                
-                if(body->position.x > screenWidth + 4300)
+
+                if (body->position.x > screenWidth + 4300)
                     fase = 1;
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-                
+
                 BeginMode2D(camera);
 
                 ClearBackground(BLACK);
 
                 //desenhar as coisas do ambiente antes do personagem
-                DrawTexture(cenario, -screenWidth / 2.0f, -screenHeight / 2.0f -250, WHITE);
+                DrawTexture(cenario, -screenWidth / 2.0f, -screenHeight / 2.0f - 250, WHITE);
                 DrawTexture(caixote, screenWidth / 2.0f + 950, (float)screenHeight - 150, WHITE);
                 DrawTexture(caixote, screenWidth + 3550, (float)screenHeight - 50, WHITE);
                 DrawTexture(caixote, screenWidth + 2550, (float)screenHeight - 50, WHITE);
                 DrawTexture(caixote, screenWidth / 2.0f + 450, (float)screenHeight - 150, WHITE);
-                DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2, (float)screenHeight - 50, WHITE);
+                DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
                 DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
                 DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
                 DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
                 DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
                 DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
-                DrawTexture(taxi, screenWidth / 2.0f + 1475, (float)screenHeight - 375 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 2875, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi,screenWidth + 3175, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 3775, (float)screenHeight -275 -150, WHITE);
-                for(int i=0; i<lifes; i++){
-                    DrawTexture(heart, body->position.x - 800 + (i+1)*50, body->position.y - 550, WHITE);
+                DrawTexture(taxi, screenWidth / 2.0f + 1345, (float)screenHeight - 400 - 180, WHITE);
+                DrawTexture(taxi, screenWidth + 2745, (float)screenHeight - 300 - 180, WHITE);
+                DrawTexture(taxi, screenWidth + 3045, (float)screenHeight - 300 - 180, WHITE);
+                DrawTexture(taxi, screenWidth + 3645, (float)screenHeight - 300 - 180, WHITE);
+                for (int i = 0; i < lifes; i++)
+                {
+                    DrawTexture(heart, body->position.x - 800 + (i + 1) * 50, body->position.y - 550, WHITE);
                 }
-    
+
                 Font fontStart = LoadFont("resources/fonts/mecha.png");
 
                 if(timeElapsed <= 30){
@@ -326,13 +346,14 @@ int main(void)
                     DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 95, 1.5f, YELLOW);
                     DrawText(texto, body->position.x + 650, body->position.y + 250, 50, YELLOW);
                 }
+
                 if(timeElapsed > 90) {
                     body->velocity.x = VELOCITY;
                     follower->velocity.x = VELOCITY;
                     tempoRestante -= GetFrameTime();
                     texto = mostrarTempo(tempoRestante);
                 }
-              
+
                 // Draw created physics bodies
                 int bodiesCount = GetPhysicsBodiesCount();
                 for (int i = 0; i < bodiesCount; i++)
@@ -352,43 +373,53 @@ int main(void)
                         DrawLineV(vertexA, vertexB, BLANK); // Draw a line between two vertex positions
                     }
                 }
-                    
-            runnertimer += GetFrameTime();
 
-            if (runnertimer >= 0.2f)
-            {
-                runnertimer = 0.0f;
-                runnerFrame += 1;
-            }
+                runnertimer += GetFrameTime();
 
-            runnerFrame = runnerFrame % runnerFrames;
-            if (isShortened)
-            {
-                sourceRecRunner.x = runnerWidth * 6;
-                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
-            }
-            else
-            {
-
-            //    DrawText(TextFormat("Score: %i", body->velocity.y), 10, 10, 10, WHITE);
-                if(body->velocity.y<0){
-                    sourceRecRunner.x = runnerWidth * 7.2;
-                } else
-                if ( !body->isGrounded)
+                if (runnertimer >= 0.2f)
                 {
-                    sourceRecRunner.x = runnerWidth * 8.4;
-                } else
-                {
-                    sourceRecRunner.x = runnerWidth * runnerFrame;
+                    runnertimer = 0.0f;
+                    runnerFrame += 1;
                 }
-                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
-            }
-           //     DrawText("Use 'ARROWS' to move player", 10, 10, 10, WHITE);
-            //    DrawText("Press 'R' to reset example", 10, 30, 10, WHITE);
+
+                runnerFrame = runnerFrame % runnerFrames;
+                if (isShortened)
+                {
+                    sourceRecRunner.width = (float)runner.width / 9.0;
+                    sourceRecRunner.x = runnerWidth * 6.0;
+                    DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 95}, WHITE);
+                }
+                else
+                {
+                    sourceRecRunner.width = (float)runner.width / 11.2;
+
+                    //    DrawText(TextFormat("Score: %i", body->velocity.y), 10, 10, 10, WHITE);
+                    if (body->velocity.y < 0)
+                    {
+                        sourceRecRunner.x = runnerWidth * 7.1;
+                    }
+                    else if (!body->isGrounded)
+                    {
+                        sourceRecRunner.x = runnerWidth * 8.35;
+                    }
+                    else
+                    {
+                        sourceRecRunner.x = runnerWidth * runnerFrame;
+                    }
+                    DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 90}, WHITE);
+                }
+                //     DrawText("Use 'ARROWS' to move player", 10, 10, 10, WHITE);
+                //    DrawText("Press 'R' to reset example", 10, 30, 10, WHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
+            UnloadTexture(runner);
+            UnloadTexture(ufo);
+            UnloadTexture(cenario);
+            UnloadTexture(bricks);
+            UnloadTexture(caixote);
+            UnloadTexture(taxi);
         
         free(texto);
         UnloadTexture(runner);
@@ -399,13 +430,13 @@ int main(void)
         UnloadTexture(taxi);
         }
         else
-        {   
+        {
             UpdateMusicStream(theme);
 
             SetMusicPitch(theme, pitch);
 
             // Get timePlayed scaled to bar dimensions
-            timePlayed = GetMusicTimePlayed(theme)/GetMusicTimeLength(theme)*(screenWidth - 40);
+            timePlayed = GetMusicTimePlayed(theme) / GetMusicTimeLength(theme) * (screenWidth - 40);
 
             // Draw
             //----------------------------------------------------------------------------------
@@ -415,7 +446,8 @@ int main(void)
             DrawTexture(texture, 0, 0, WHITE);
 
             DrawTextureRec(button, sourceRec, (Vector2){btnBounds.x, btnBounds.y}, WHITE); // Draw button frame
-            DrawText("INICIAR O JOGO", 200, 100, 50, WHITE);
+            DrawText("SEJA BEM-VINDO AO", 225, 100, 30, WHITE);
+            DrawText("DANIEL PASSA A GENTE!", 200, 150, 30, WHITE);
 
             //DrawText("Espaço: Pular", 300, 100, 50, WHITE);
 
@@ -427,7 +459,6 @@ int main(void)
     UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
     ClosePhysics();
-
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
