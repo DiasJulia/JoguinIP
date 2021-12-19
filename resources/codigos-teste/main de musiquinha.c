@@ -36,18 +36,21 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/caixote.png");
 
-    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
+    Music theme = LoadMusicStream("resources/audio/musica_inicial.mp3");
     theme.looping = true;
     float pitch = 1.0f;
-    Music music = LoadMusicStream("resources/musiquinha.mp3");
+    Music music = LoadMusicStream("resources/audio/musiquinha.mp3");
     music.looping = true;
     pitch = 1.0f;
+
+    const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
+    int framesCounter = 0;  //mensagem de transição
 
     Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
@@ -169,6 +172,37 @@ int main(void)
             Texture2D cenario = LoadTexture("resources/cidade.png");
             Texture2D bricks = LoadTexture("resources/bricks.png");
             Texture2D plataforma = LoadTexture("resources/plataforma.png");
+            Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
+            transicao.looping = true;
+
+            while (!IsKeyPressed(KEY_ENTER))   //tela de transição
+        {
+        PlayMusicStream(transicao);
+        timePlayed = 0.0f;
+        pause = false;
+
+        UpdateMusicStream(transicao);
+        SetMusicPitch(transicao, pitch);
+        timePlayed = GetMusicTimePlayed(transicao)/GetMusicTimeLength(transicao)*(screenWidth - 40);
+
+        if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
+        else framesCounter++;
+        BeginDrawing();
+
+            ClearBackground(BLACK);
+
+            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
+
+            DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
+            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+
+        EndDrawing();       
+
+        } 
+            UnloadMusicStream(transicao);
+
+        //delay
+
 
             PlayMusicStream(music);
             timePlayed = 0.0f;

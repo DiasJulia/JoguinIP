@@ -23,14 +23,16 @@ void aumentar(PhysicsBody *body){
     (*body)->isGrounded = isGrounded;
 }
 
-int main(void)
+int maincvcv(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite button");
+    SetConfigFlags(FLAG_MSAA_4X_HINT);  // NOTE: Try to enable MSAA 4X
+
+    InitWindow(screenWidth, screenHeight, "teste do jogo / testando");
 
     InitAudioDevice(); // Initialize audio device
 
@@ -39,6 +41,13 @@ int main(void)
     Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/caixote.png");
+
+    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
+    theme.looping = true;
+    float pitch = 1.0f;
+    Music music = LoadMusicStream("resources/musiquinha.mp3");
+    music.looping = true;
+    pitch = 1.0f;
 
     Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
@@ -120,8 +129,14 @@ int main(void)
     float runnertimer = 0.0f;
     int runnerFrame = 0;
 
+    PlayMusicStream(theme);
+
+    float timePlayed = 0.0f;
+    bool pause = false;
+
     while (!botaoClicado) // Detect window close button or ESC key
     {
+
         mousePoint = GetMousePosition();
         btnAction = false;
 
@@ -150,13 +165,23 @@ int main(void)
             PlaySound(fxButton);
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
+            UnloadMusicStream(theme);
             Texture2D cenario = LoadTexture("resources/cidade.png");
             Texture2D bricks = LoadTexture("resources/bricks.png");
             Texture2D plataforma = LoadTexture("resources/plataforma.png");
+
+            PlayMusicStream(music);
+            timePlayed = 0.0f;
+            pause = false;
+
             //The game
             while (!WindowShouldClose())
             {
-                
+                UpdateMusicStream(music);
+                SetMusicPitch(music, pitch);
+
+                // Get timePlayed scaled to bar dimensions
+                timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
 
                 camera.target = body->position;
                 // Update
@@ -281,7 +306,13 @@ int main(void)
         UnloadTexture(bricks);
         }
         else
-        {
+        {   
+            UpdateMusicStream(theme);
+
+            SetMusicPitch(theme, pitch);
+
+            // Get timePlayed scaled to bar dimensions
+            timePlayed = GetMusicTimePlayed(theme)/GetMusicTimeLength(theme)*(screenWidth - 40);
 
             // Draw
             //----------------------------------------------------------------------------------
@@ -300,6 +331,7 @@ int main(void)
         }
     }
 
+    UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
     UnloadTexture(runner);
     UnloadTexture(caixote);

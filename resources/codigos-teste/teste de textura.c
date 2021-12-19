@@ -23,16 +23,14 @@ void aumentar(PhysicsBody *body){
     (*body)->isGrounded = isGrounded;
 }
 
-int main(void)
+int mainbcv(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT);  // NOTE: Try to enable MSAA 4X
-
-    InitWindow(screenWidth, screenHeight, "teste do jogo / testando");
+    InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite button");
 
     InitAudioDevice(); // Initialize audio device
 
@@ -41,16 +39,6 @@ int main(void)
     Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D caixote = LoadTexture("resources/caixote.png");
-
-    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
-    theme.looping = true;
-    float pitch = 1.0f;
-    Music music = LoadMusicStream("resources/musiquinha.mp3");
-    music.looping = true;
-    pitch = 1.0f;
-
-    const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
-    int framesCounter = 0;  //mensagem de transição
 
     Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
@@ -132,14 +120,8 @@ int main(void)
     float runnertimer = 0.0f;
     int runnerFrame = 0;
 
-    PlayMusicStream(theme);
-
-    float timePlayed = 0.0f;
-    bool pause = false;
-
     while (!botaoClicado) // Detect window close button or ESC key
     {
-
         mousePoint = GetMousePosition();
         btnAction = false;
 
@@ -168,54 +150,13 @@ int main(void)
             PlaySound(fxButton);
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
-            UnloadMusicStream(theme);
             Texture2D cenario = LoadTexture("resources/cidade.png");
             Texture2D bricks = LoadTexture("resources/bricks.png");
             Texture2D plataforma = LoadTexture("resources/plataforma.png");
-            Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
-            transicao.looping = true;
-
-            while (!IsKeyPressed(KEY_ENTER))   //tela de transição
-        {
-        PlayMusicStream(transicao);
-        timePlayed = 0.0f;
-        pause = false;
-
-        UpdateMusicStream(transicao);
-        SetMusicPitch(transicao, pitch);
-        timePlayed = GetMusicTimePlayed(transicao)/GetMusicTimeLength(transicao)*(screenWidth - 40);
-
-        if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
-        else framesCounter++;
-        BeginDrawing();
-
-            ClearBackground(BLACK);
-
-            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
-
-            DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
-            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
-
-        EndDrawing();       
-
-        } 
-            UnloadMusicStream(transicao);
-
-        //delay
-
-
-            PlayMusicStream(music);
-            timePlayed = 0.0f;
-            pause = false;
-
             //The game
             while (!WindowShouldClose())
             {
-                UpdateMusicStream(music);
-                SetMusicPitch(music, pitch);
-
-                // Get timePlayed scaled to bar dimensions
-                timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
+                
 
                 camera.target = body->position;
                 // Update
@@ -340,13 +281,7 @@ int main(void)
         UnloadTexture(bricks);
         }
         else
-        {   
-            UpdateMusicStream(theme);
-
-            SetMusicPitch(theme, pitch);
-
-            // Get timePlayed scaled to bar dimensions
-            timePlayed = GetMusicTimePlayed(theme)/GetMusicTimeLength(theme)*(screenWidth - 40);
+        {
 
             // Draw
             //----------------------------------------------------------------------------------
@@ -365,7 +300,6 @@ int main(void)
         }
     }
 
-    UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
     UnloadTexture(runner);
     UnloadTexture(caixote);
