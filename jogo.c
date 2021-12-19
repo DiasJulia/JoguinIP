@@ -61,7 +61,7 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[400] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM para o caminho certo e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
+    const char message[400] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 3;
 
@@ -208,16 +208,17 @@ int main(void)
         SetMusicPitch(transicao, pitch);
         timePlayed = GetMusicTimePlayed(transicao)/GetMusicTimeLength(transicao)*(screenWidth - 40);
 
-        if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
-        else framesCounter++;
+        if (IsKeyDown(KEY_SPACE)) 
+            framesCounter += 8;
+        else 
+            framesCounter++;
+
         BeginDrawing();
 
             ClearBackground(BLACK);
 
-            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
-
-            DrawText(TextSubtext(message, 0, framesCounter/05), 50, 160, 15, MAROON);
-            DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 230, 300, 20, LIGHTGRAY);
+            DrawText(TextSubtext(message, 0, framesCounter/10), 30, 50, 23.12, MAROON);
+            DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 171, 300, 20, LIGHTGRAY);
 
         EndDrawing();       
 
@@ -312,10 +313,10 @@ int main(void)
                 DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
                 DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
                 DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
-                DrawTexture(taxi, screenWidth / 2.0f + 1475, (float)screenHeight - 375 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 2875, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi,screenWidth + 3175, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 3775, (float)screenHeight -275 -150, WHITE);
+                DrawTexture(taxi, screenWidth / 2.0f + 1475 - 180, (float)screenHeight - 375 -150, WHITE);
+                DrawTexture(taxi, screenWidth + 2875 - 180, (float)screenHeight - 275 -150, WHITE);
+                DrawTexture(taxi,screenWidth + 3175 - 180, (float)screenHeight - 275 -150, WHITE);
+                DrawTexture(taxi, screenWidth + 3775 - 180, (float)screenHeight -275 -150, WHITE);
                 for(int i=0; i<lifes; i++){
                     DrawTexture(heart, body->position.x - 800 + (i+1)*50, body->position.y - 550, WHITE);
                 }
