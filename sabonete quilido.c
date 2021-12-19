@@ -63,39 +63,41 @@ int main(void)
     //em baixo *1.5 + x/2
 
     // Create floor and walls rectangle physics body
-    PhysicsBody floor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10);
+    PhysicsBody afloor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10);
     //PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + (float)screenWidth * 2 + 2000, (float)screenHeight}, (float)screenWidth * 2 + 1650, 100, 10);
-    PhysicsBody plataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
-    PhysicsBody plataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
-    PhysicsBody plataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
-    PhysicsBody plataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
-    PhysicsBody pi = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
-    PhysicsBody bloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 320}, 60, 70, 10);
-    PhysicsBody plataforma6 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3150, (float)screenHeight - 210}, 120, 20, 30);
-    PhysicsBody plataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
-    PhysicsBody plataforma8 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3450, (float)screenHeight - 150}, 120, 20, 30);
-    PhysicsBody plataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
-    PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 260}, 50, 200, 30);
-    PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4020, (float)screenHeight - 230}, 150, 200, 30);
+    PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
+    PhysicsBody aplataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
+    PhysicsBody aplataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
+    PhysicsBody aplataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
+    PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
+    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 320}, 60, 70, 10);
+    PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
+    PhysicsBody aplataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
+    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 260}, 50, 200, 30);
+    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4020, (float)screenHeight - 260}, 150, 200, 30);
+    PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 400, (float)screenHeight - 210}, 70, 260, 30);
+    PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 210}, 70, 260, 30);
+   
 
 
 
     
 
     // Disable dynamics to floor and walls physics bodies
-    plataforma->enabled = false;
-    plataforma2->enabled = false;
-    plataforma3->enabled = false;
-    plataforma4->enabled = false;
-    plataforma6->enabled = false;
-    plataforma7->enabled = false;
-    plataforma8->enabled = false;
-    plataforma9->enabled = false;
-    floor->enabled = false;
-    pi->enabled = false;
-    caixa->enabled = false;
-    caixa2->enabled = false;
-    bloco->enabled = false;
+    aplataforma->enabled = false;
+    aplataforma2->enabled = false;
+    aplataforma3->enabled = false;
+    aplataforma4->enabled = false;
+    aplataforma7->enabled = false;
+    aplataforma9->enabled = false;
+    afloor->enabled = false;
+    api->enabled = false;
+    acaixa->enabled = false;
+    acaixa2->enabled = false;
+    abloco->enabled = false;
+    abox->enabled = false;
+    abox2->enabled = false;
+    
     
     //floor2->enabled = false;
 
