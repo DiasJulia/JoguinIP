@@ -214,7 +214,7 @@ int main(void)
             pause = false;
 
             //The game
-            while (fase == 0)
+            while (fase == 0 && !WindowShouldClose())
             {
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
