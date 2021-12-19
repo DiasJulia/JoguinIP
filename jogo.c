@@ -50,6 +50,7 @@ int main(void)
     const char message[128] = "ALO ALO, cabou  a luz\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 5;
+    float posAnterior;
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -238,7 +239,7 @@ int main(void)
                     }
                 }
 //************************************************************************************************
-                if (body->position.y > (float)screenHeight + 2000) // Reset physics input
+                if (body->position.y > (float)screenHeight + 2000 || body->position.x == posAnterior) // Reset physics input
                 {
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
