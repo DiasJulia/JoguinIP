@@ -61,7 +61,7 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[128] = "ALO ALO, cabou  a luz\n";
+    const char message[400] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 3;
 
@@ -206,16 +206,17 @@ int main(void)
         SetMusicPitch(transicao, pitch);
         timePlayed = GetMusicTimePlayed(transicao)/GetMusicTimeLength(transicao)*(screenWidth - 40);
 
-        if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
-        else framesCounter++;
+        if (IsKeyDown(KEY_SPACE)) 
+            framesCounter += 8;
+        else 
+            framesCounter++;
+
         BeginDrawing();
 
             ClearBackground(BLACK);
 
-            DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
-
-            DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
-            DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+            DrawText(TextSubtext(message, 0, framesCounter/10), 30, 50, 23.12, MAROON);
+            DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 171, 300, 20, LIGHTGRAY);
 
         EndDrawing();       
 
@@ -263,7 +264,13 @@ int main(void)
                     lifes--;
                 }
                 if(lifes == 0){
-                    fase = 0;
+                    BeginDrawing();
+    
+                    ClearBackground(BLACK);
+                    DrawText("GAME OVER", 165, 130, 75, WHITE);
+                    DrawText("PRESS [ENTER] to RESTART!", 210, 320, 25, WHITE);
+            
+                    EndDrawing();
                 }
 //*************************************************************************************************
                 if(IsKeyPressed(KEY_DOWN) && body->isGrounded){
@@ -302,10 +309,12 @@ int main(void)
                 DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
                 DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
                 DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
+
                 DrawTexture(taxi, screenWidth / 2.0f + 1345, (float)screenHeight - 400 -180, WHITE);
                 DrawTexture(taxi, screenWidth + 2745, (float)screenHeight - 300 -180, WHITE);
                 DrawTexture(taxi,screenWidth + 3045, (float)screenHeight - 300 -180, WHITE);
                 DrawTexture(taxi, screenWidth + 3645, (float)screenHeight -300 -180, WHITE);
+
                 for(int i=0; i<lifes; i++){
                     DrawTexture(heart, body->position.x - 800 + (i+1)*50, body->position.y - 550, WHITE);
                 }
@@ -410,7 +419,8 @@ int main(void)
             DrawTexture(texture, 0, 0, WHITE);
 
             DrawTextureRec(button, sourceRec, (Vector2){btnBounds.x, btnBounds.y}, WHITE); // Draw button frame
-            DrawText("INICIAR O JOGO", 200, 100, 50, WHITE);
+            DrawText("SEJA BEM-VINDO AO", 225, 100, 30, WHITE);
+            DrawText("DANIEL PASSA A GENTE!", 200, 150, 30, WHITE);
 
             //DrawText("Espaço: Pular", 300, 100, 50, WHITE);
 
