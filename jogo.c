@@ -39,8 +39,6 @@ int main(void)
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
-    Texture2D ufo = LoadTexture("resources/img/navepequena.png");
 
     Music theme = LoadMusicStream("resources/musica_inicial.mp3");
     theme.looping = true;
@@ -52,8 +50,6 @@ int main(void)
     const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
     int framesCounter = 0;  //mensagem de transição
 
-    Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
-
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
     Rectangle sourceRec = {0, 0, (float)button.width, frameHeight};
@@ -63,7 +59,7 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
-    bool fase = 1; //responsável por terminar o loop de codigo quando a fase terminar
+    bool fase = 0; //responsável por terminar o loop de codigo quando a fase terminar
     bool botaoClicado = 0; //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
@@ -126,11 +122,6 @@ int main(void)
     camera.zoom = 0.5f;
 
     SetTargetFPS(60);
-    //Animations
-    float runnerWidth = (float)runner.width / 10.4;
-    int runnerFrames = 6;
-    float runnertimer = 0.0f;
-    int runnerFrame = 0;
 
     PlayMusicStream(theme);
     SetMusicVolume(theme, (float)0.2);
@@ -170,12 +161,23 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
-            Texture2D caixote = LoadTexture("resources/caixote.png");
-            Texture2D cenario = LoadTexture("resources/cidade.png");
-            Texture2D bricks = LoadTexture("resources/bricks.png");
-            Texture2D taxi = LoadTexture("resources/taxi.png");
+            Texture2D caixote = LoadTexture("resources/img/caixote.png");
+            Texture2D cenario = LoadTexture("resources/img/cidade.png");
+            Texture2D bricks = LoadTexture("resources/img/bricks.png");
+            Texture2D taxi = LoadTexture("resources/img/taxi.png");
+            Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
+            Texture2D ufo = LoadTexture("resources/img/navepequena.png");
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
+
+            
+        Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
+
+        //Animations
+        float runnerWidth = (float)runner.width / 10.4;
+        int runnerFrames = 6;
+        float runnertimer = 0.0f;
+        int runnerFrame = 0;
 
         while (!IsKeyPressed(KEY_ENTER))   //tela de transição
         {
@@ -210,7 +212,7 @@ int main(void)
             pause = false;
 
             //The game
-            while (fase == 1 && !WindowShouldClose())
+            while (fase == 0)
             {
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
@@ -363,6 +365,8 @@ int main(void)
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
+        UnloadTexture(runner);
+        UnloadTexture(ufo);
         UnloadTexture(cenario);
         UnloadTexture(bricks);
         UnloadTexture(caixote);
@@ -396,8 +400,6 @@ int main(void)
 
     UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
-    UnloadTexture(runner);
-    UnloadTexture(ufo);
     ClosePhysics();
 
 
