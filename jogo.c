@@ -47,8 +47,9 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
+    const char message[128] = "ALO ALO, cabou  a luz\n";
     int framesCounter = 0;  //mensagem de transição
+    int lifes = 5;
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -167,6 +168,7 @@ int main(void)
             Texture2D taxi = LoadTexture("resources/img/taxi.png");
             Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
             Texture2D ufo = LoadTexture("resources/img/navepequena.png");
+            Texture2D heart = LoadTexture("resources/img/heart.png");
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
 
@@ -235,15 +237,19 @@ int main(void)
                         timeSlide = 0;
                     }
                 }
-
+//************************************************************************************************
                 if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
                     body->velocity = (Vector2){0, 0};
                     SetPhysicsBodyRotation(body, 0);
+                    lifes--;
                 }
-
+                if(lifes == 0){
+                    fase = 0;
+                }
+//*************************************************************************************************
                 if(IsKeyPressed(KEY_DOWN) && !isShortened && body->isGrounded){
                     abaixar(&body);
                     isShortened = 1;                   
@@ -286,12 +292,9 @@ int main(void)
                 DrawTexture(taxi, screenWidth + 2875, (float)screenHeight - 275 -150, WHITE);
                 DrawTexture(taxi,screenWidth + 3175, (float)screenHeight - 275 -150, WHITE);
                 DrawTexture(taxi, screenWidth + 3775, (float)screenHeight -275 -150, WHITE);
-/* PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
-    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
-
-    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
-
-    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 75}, 50, 200, 10); */
+                for(int i=0; i<lifes; i++){
+                    DrawTexture(heart, body->position.x - 800 + (i+1)*50, body->position.y - 550, WHITE);
+                }
     
                 Font fontStart = LoadFont("resources/fonts/mecha.png");
 
