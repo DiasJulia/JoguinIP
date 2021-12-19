@@ -23,7 +23,7 @@ void aumentar(PhysicsBody *body){
     (*body)->isGrounded = isGrounded;
 }
 
-int main(void)
+int mainbcv(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -34,12 +34,13 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/img/button.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
-    Texture2D runner = LoadTexture("resources/personagens/runner.png"); // Runner texture
+    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
+    Texture2D caixote = LoadTexture("resources/caixote.png");
 
-    Rectangle sourceRecRunner = {0, 0, (float)runner.width/6.05, (float)runner.height};
+    Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -50,6 +51,8 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
+    bool fase = 0; //responsável por terminar o loop de codigo quando a fase terminar
+    bool botaoClicado = 0; //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
 
@@ -66,45 +69,37 @@ int main(void)
     PhysicsBody floor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10);
     //PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + (float)screenWidth * 2 + 2000, (float)screenHeight}, (float)screenWidth * 2 + 1650, 100, 10);
     PhysicsBody plataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
-    PhysicsBody plataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
-    PhysicsBody plataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
-    PhysicsBody plataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
-    PhysicsBody pi = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
-    PhysicsBody bloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 320}, 60, 70, 10);
-    PhysicsBody plataforma6 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3150, (float)screenHeight - 210}, 120, 20, 10);
-    PhysicsBody plataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 10);
-    PhysicsBody plataforma8 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3450, (float)screenHeight - 150}, 120, 20, 10);
-    PhysicsBody plataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 10);
-    PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 260}, 50, 200, 10);
-    PhysicsBody plataforma10 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4700, (float)screenHeight - 120}, 300, 20, 10);
-    PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4700, (float)screenHeight - 260}, 60, 200, 10);
-    PhysicsBody plataforma11 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 5500, (float)screenHeight - 120}, 300, 20, 10);
-    PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 5500, (float)screenHeight - 260}, 60, 200, 10);
-
-    
+    PhysicsBody plataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1800, (float)screenHeight - 300}, 100, 20, 10);
+    PhysicsBody plataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2000, (float)screenHeight}, 100, 20, 10);
+    PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight + 100}, 2000, 100, 10);
+    PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1000, (float)screenHeight - 100}, 100, 100, 10);
+    PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 500, (float)screenHeight - 100}, 100, 100, 10);
+    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
+    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2600, (float)screenHeight}, 100, 100, 10);
+    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody caixa4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3600, (float)screenHeight}, 100, 100, 10);
+    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 75}, 50, 200, 10);
 
     // Disable dynamics to floor and walls physics bodies
+    naoSeiONome4->enabled = false;
+    caixa4->enabled = false;
+    naoSeiONome3->enabled = false;
+    caixa3->enabled = false;
+    naoSeiONome2->enabled = false;
+    floor2->enabled = false;
     plataforma->enabled = false;
     plataforma2->enabled = false;
     plataforma3->enabled = false;
-    plataforma4->enabled = false;
-    plataforma6->enabled = false;
-    plataforma7->enabled = false;
-    plataforma8->enabled = false;
-    plataforma9->enabled = false;
-    plataforma10->enabled = false;
-    plataforma11->enabled = false;
-    floor->enabled = false;
-    pi->enabled = false;
-    caixa->enabled = false;
     caixa2->enabled = false;
-    caixa3->enabled = false;
-    bloco->enabled = false;
-    
+    naoSeiONome->enabled = false;
+    caixa->enabled = false;
+    floor->enabled = false;
     //floor2->enabled = false;
 
     int isShortened = 0;
     int timeElapsed = 0;
+    int timeSlide = 0;
 
     // Create movement physics body
     PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
@@ -114,18 +109,18 @@ int main(void)
 
     Camera2D camera = {0};
     camera.target = body->position;
-    camera.offset = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
+    camera.offset = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f + 50};
     camera.rotation = 0.0f;
     camera.zoom = 0.5f;
 
     SetTargetFPS(60);
     //Animations
-    float runnerWidth = (float)runner.width/6.0;
+    float runnerWidth = (float)runner.width / 10.4;
     int runnerFrames = 6;
-    float runnertimer= 0.0f;
+    float runnertimer = 0.0f;
     int runnerFrame = 0;
 
-    while (!WindowShouldClose()) // Detect window close button or ESC key
+    while (!botaoClicado) // Detect window close button or ESC key
     {
         mousePoint = GetMousePosition();
         btnAction = false;
@@ -151,24 +146,35 @@ int main(void)
         //Check if button is clicked
         if (btnAction)
         {
+            botaoClicado = 1;
             PlaySound(fxButton);
             UnloadTexture(button); // Unload button texture
-
+            UnloadTexture(texture);
+            Texture2D cenario = LoadTexture("resources/cidade.png");
+            Texture2D bricks = LoadTexture("resources/bricks.png");
+            Texture2D plataforma = LoadTexture("resources/plataforma.png");
             //The game
-            while (!WindowShouldClose()) // Detect window close button or ESC key
+            while (!WindowShouldClose())
             {
+                
+
                 camera.target = body->position;
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdatePhysics(); // Update physics system
                 timeElapsed++;
-                if(isShortened && timeElapsed % 50 == 0){
-                    aumentar(&body);
-                    isShortened = 0;
-                    timeElapsed = 0;
+                if (isShortened)
+                {
+                    timeSlide++;
+                    if (timeSlide > 30)
+                    {
+                        aumentar(&body);
+                        isShortened = 0;
+                        timeSlide = 0;
+                    }
                 }
 
-                if (IsKeyPressed(KEY_R)) // Reset physics input
+                if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
@@ -194,18 +200,27 @@ int main(void)
                 // Vertical movement input checking if player physics body is grounded
                 if (IsKeyDown(KEY_SPACE) && body->isGrounded)
                     body->velocity.y = -VELOCITY * 4;
-                //----------------------------------------------------------------------------------
+                
+                if(body->position.x > screenWidth + 4300)
+                    fase = 1;
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
+                
                 BeginMode2D(camera);
 
                 ClearBackground(BLACK);
 
-                DrawFPS(screenWidth - 90, screenHeight - 30);
-
+                //desenhar as coisas do ambiente antes do personagem
+                DrawTexture(cenario, -screenWidth / 2.0f, -screenHeight / 2.0f -250, WHITE);
+                DrawTexture(caixote, screenWidth / 2.0f + 950, (float)screenHeight - 150, WHITE);
+                DrawTexture(caixote, screenWidth + 3550, (float)screenHeight - 50, WHITE);
+                DrawTexture(caixote, screenWidth + 2550, (float)screenHeight - 50, WHITE);
+                DrawTexture(caixote, screenWidth / 2.0f + 450, (float)screenHeight - 150, WHITE);
+                DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2, (float)screenHeight - 50, WHITE);
+                DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
+              
                 // Draw created physics bodies
                 int bodiesCount = GetPhysicsBodiesCount();
                 for (int i = 0; i < bodiesCount; i++)
@@ -222,33 +237,48 @@ int main(void)
                         int jj = (((j + 1) < vertexCount) ? (j + 1) : 0); // Get next vertex or first to close the shape
                         Vector2 vertexB = GetPhysicsShapeVertex(body, jj);
 
-                        DrawLineV(vertexA, vertexB, GREEN); // Draw a line between two vertex positions
+                        DrawLineV(vertexA, vertexB, BLANK); // Draw a line between two vertex positions
                     }
                 }
                     
-                runnertimer += GetFrameTime();
+            runnertimer += GetFrameTime();
 
-                if(runnertimer >= 0.2f){
-                    runnertimer = 0.0f;
-                    runnerFrame +=1;
-                }
+            if (runnertimer >= 0.2f)
+            {
+                runnertimer = 0.0f;
+                runnerFrame += 1;
+            }
 
-                runnerFrame = runnerFrame % runnerFrames;
-                sourceRecRunner.x = runnerWidth * runnerFrame;
-
+            runnerFrame = runnerFrame % runnerFrames;
+            if (isShortened)
+            {
+                sourceRecRunner.x = runnerWidth * 6;
                 DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
+            }
+            else
+            {
 
-                DrawText("Use 'ARROWS' to move player", 10, 10, 10, WHITE);
-                DrawText("Press 'R' to reset example", 10, 30, 10, WHITE);
+            //    DrawText(TextFormat("Score: %i", body->velocity.y), 10, 10, 10, WHITE);
+                if(body->velocity.y<0){
+                    sourceRecRunner.x = runnerWidth * 7.2;
+                } else
+                if ( !body->isGrounded)
+                {
+                    sourceRecRunner.x = runnerWidth * 8.4;
+                } else
+                {
+                    sourceRecRunner.x = runnerWidth * runnerFrame;
+                }
+                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
+            }
+           //     DrawText("Use 'ARROWS' to move player", 10, 10, 10, WHITE);
+            //    DrawText("Press 'R' to reset example", 10, 30, 10, WHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
-            ClosePhysics();       // Unitialize physics
-
-            CloseAudioDevice(); // Close audio device
-
-            CloseWindow(); // Close window and OpenGL context
+        UnloadTexture(cenario);
+        UnloadTexture(bricks);
         }
         else
         {
@@ -271,9 +301,8 @@ int main(void)
     }
 
     CloseAudioDevice(); // Close audio device
-    UnloadTexture(texture);
-    UnloadTexture(button);
     UnloadTexture(runner);
+    UnloadTexture(caixote);
     ClosePhysics();
 
 

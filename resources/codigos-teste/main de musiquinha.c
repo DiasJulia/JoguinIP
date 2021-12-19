@@ -36,16 +36,16 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D ufo = LoadTexture("resources/navepequena.png");
 
-    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
+    Music theme = LoadMusicStream("resources/audio/musica_inicial.mp3");
     theme.looping = true;
     float pitch = 1.0f;
-    Music music = LoadMusicStream("resources/musiquinha.mp3");
+    Music music = LoadMusicStream("resources/audio/musiquinha.mp3");
     music.looping = true;
     pitch = 1.0f;
 
