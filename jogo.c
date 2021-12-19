@@ -36,11 +36,11 @@ int main(void)
 
     InitAudioDevice(); // Initialize audio device
 
-    Sound fxButton = LoadSound("resources/buttonfx.wav");     // Load button sound
-    Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
-    Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
+    Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
+    Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
-    Texture2D ufo = LoadTexture("resources/navepequena.png");
+    Texture2D ufo = LoadTexture("resources/img/navepequena.png");
 
     Music theme = LoadMusicStream("resources/musica_inicial.mp3");
     theme.looping = true;
@@ -63,7 +63,7 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
-    bool fase = 0; //responsável por terminar o loop de codigo quando a fase terminar
+    bool fase = 1; //responsável por terminar o loop de codigo quando a fase terminar
     bool botaoClicado = 0; //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
@@ -177,7 +177,7 @@ int main(void)
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
 
-            while (!IsKeyPressed(KEY_ENTER))   //tela de transição
+        while (!IsKeyPressed(KEY_ENTER))   //tela de transição
         {
         PlayMusicStream(transicao);
         SetMusicVolume(transicao, (float)0.2);
@@ -201,11 +201,8 @@ int main(void)
 
         EndDrawing();       
 
-        } 
+        }
             UnloadMusicStream(transicao);
-
-        //delay
-
 
             PlayMusicStream(music);
             SetMusicVolume(music, (float)0.1);
@@ -213,7 +210,7 @@ int main(void)
             pause = false;
 
             //The game
-            while (fase == 1)
+            while (fase == 1 && !WindowShouldClose())
             {
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
