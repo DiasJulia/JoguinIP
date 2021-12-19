@@ -2,6 +2,8 @@
 #define NUM_FRAMES 3
 #define PHYSAC_IMPLEMENTATION
 #include "extras/physac.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define VELOCITY 0.5f
 
@@ -21,6 +23,18 @@ void aumentar(PhysicsBody *body){
 
     *body = CreatePhysicsBodyRectangle(position, 50, 50, 1);
     (*body)->isGrounded = isGrounded;
+}
+
+char *mostrarTempo(float tempoRestante){
+    int minutos = tempoRestante / 60;
+    int segundos = ((int)tempoRestante) % 60;
+    char *texto = (char *)calloc(20, sizeof(char));
+    //char *texto = (char *)calloc(20, sizeof(char));
+    if(texto == NULL) exit(1);
+
+    sprintf(texto, "0%d:%d", minutos, segundos);
+
+    return texto;
 }
 
 int main(void)
@@ -107,9 +121,14 @@ int main(void)
     floor->enabled = false;
     //floor2->enabled = false;
 
+    //tempo e flags
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
+    float tempoPassado = 0.0f;
+    float tempoRestante;
+    int tempoFase1 = 40.0f;
+    char *texto = NULL;
 
     // Create movement physics body
     PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
@@ -220,6 +239,12 @@ int main(void)
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
 
+                //calcula tempo
+                if(timeElapsed == 0) tempoRestante = tempoFase1;
+                else tempoRestante -= GetFrameTime();
+
+                texto = mostrarTempo(tempoRestante);
+
                 // Get timePlayed scaled to bar dimensions
                 timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
 
@@ -307,6 +332,7 @@ int main(void)
                     DrawTextEx(fontStart, "1", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
                 } else {
                     DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 95, 1.5f, YELLOW);
+                    DrawText(texto, body->position.x + 250, body->position.y - 250, 50, YELLOW);
                 }
                 if(timeElapsed > 90) {
                     body->velocity.x = VELOCITY;
@@ -369,6 +395,8 @@ int main(void)
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
+        
+        free(texto);
         UnloadTexture(runner);
         UnloadTexture(ufo);
         UnloadTexture(cenario);
