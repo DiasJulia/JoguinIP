@@ -71,12 +71,13 @@ int main(void)
     PhysicsBody plataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
     PhysicsBody pi = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
     PhysicsBody bloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 320}, 60, 70, 10);
-    PhysicsBody plataforma6 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3150, (float)screenHeight - 210}, 120, 20, 30);
     PhysicsBody plataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
-    PhysicsBody plataforma8 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3450, (float)screenHeight - 150}, 120, 20, 30);
     PhysicsBody plataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
     PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 260}, 50, 200, 30);
-    PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4020, (float)screenHeight - 230}, 150, 200, 30);
+    PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4020, (float)screenHeight - 260}, 150, 200, 30);
+    PhysicsBody box = CreatePhysicsBodyRectangle((Vector2){screenWidth + 400, (float)screenHeight - 210}, 70, 260, 30);
+    PhysicsBody box2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 210}, 70, 260, 30);
+   
 
 
 
@@ -87,15 +88,16 @@ int main(void)
     plataforma2->enabled = false;
     plataforma3->enabled = false;
     plataforma4->enabled = false;
-    plataforma6->enabled = false;
     plataforma7->enabled = false;
-    plataforma8->enabled = false;
     plataforma9->enabled = false;
     floor->enabled = false;
     pi->enabled = false;
     caixa->enabled = false;
     caixa2->enabled = false;
     bloco->enabled = false;
+    box->enabled = false;
+    box2->enabled = false;
+    
     
     //floor2->enabled = false;
 
