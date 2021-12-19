@@ -23,7 +23,7 @@ void aumentar(PhysicsBody *body){
     (*body)->isGrounded = isGrounded;
 }
 
-int main(void)
+int mainteste(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
