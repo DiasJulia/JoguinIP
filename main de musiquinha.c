@@ -40,7 +40,7 @@ int main(void)
     Texture2D button = LoadTexture("resources/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/unknown.png"); // background texture
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
-    Texture2D caixote = LoadTexture("resources/caixote.png");
+    Texture2D ufo = LoadTexture("resources/navepequena.png");
 
     Music theme = LoadMusicStream("resources/musica_inicial.mp3");
     theme.looping = true;
@@ -91,7 +91,7 @@ int main(void)
     PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2600, (float)screenHeight}, 100, 100, 10);
     PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
     PhysicsBody caixa4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3600, (float)screenHeight}, 100, 100, 10);
-    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 75}, 50, 200, 10);
+    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 125}, 50, 300, 10);
 
     // Disable dynamics to floor and walls physics bodies
     naoSeiONome4->enabled = false;
@@ -133,6 +133,7 @@ int main(void)
     int runnerFrame = 0;
 
     PlayMusicStream(theme);
+    SetMusicVolume(theme, (float)0.2);
 
     float timePlayed = 0.0f;
     bool pause = false;
@@ -169,15 +170,17 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
+            Texture2D caixote = LoadTexture("resources/caixote.png");
             Texture2D cenario = LoadTexture("resources/cidade.png");
             Texture2D bricks = LoadTexture("resources/bricks.png");
-            Texture2D plataforma = LoadTexture("resources/plataforma.png");
+            Texture2D taxi = LoadTexture("resources/taxi.png");
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
 
             while (!IsKeyPressed(KEY_ENTER))   //tela de transição
         {
         PlayMusicStream(transicao);
+        SetMusicVolume(transicao, (float)0.2);
         timePlayed = 0.0f;
         pause = false;
 
@@ -205,11 +208,12 @@ int main(void)
 
 
             PlayMusicStream(music);
+            SetMusicVolume(music, (float)0.1);
             timePlayed = 0.0f;
             pause = false;
 
             //The game
-            while (!WindowShouldClose())
+            while (fase == 1)
             {
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
@@ -279,6 +283,21 @@ int main(void)
                 DrawTexture(caixote, screenWidth / 2.0f + 450, (float)screenHeight - 150, WHITE);
                 DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2, (float)screenHeight - 50, WHITE);
                 DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
+                DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
+                DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
+                DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
+                DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
+                DrawTexture(taxi, screenWidth / 2.0f + 1475, (float)screenHeight - 375 -150, WHITE);
+                DrawTexture(taxi, screenWidth + 2875, (float)screenHeight - 275 -150, WHITE);
+                DrawTexture(taxi,screenWidth + 3175, (float)screenHeight - 275 -150, WHITE);
+                DrawTexture(taxi, screenWidth + 3775, (float)screenHeight -275 -150, WHITE);
+/* PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
+    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
+
+    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
+
+    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 75}, 50, 200, 10); */
+        
               
                 // Draw created physics bodies
                 int bodiesCount = GetPhysicsBodiesCount();
@@ -338,6 +357,8 @@ int main(void)
             }
         UnloadTexture(cenario);
         UnloadTexture(bricks);
+        UnloadTexture(caixote);
+        UnloadTexture(taxi);
         }
         else
         {   
@@ -368,7 +389,7 @@ int main(void)
     UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
     UnloadTexture(runner);
-    UnloadTexture(caixote);
+    UnloadTexture(ufo);
     ClosePhysics();
 
 
