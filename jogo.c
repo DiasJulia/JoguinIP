@@ -63,7 +63,7 @@ int main(void)
 
     const char message[128] = "ALO ALO, cabou  a luz\n";
     int framesCounter = 0;  //mensagem de transição
-    int lifes = 5;
+    int lifes = 3;
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -124,7 +124,6 @@ int main(void)
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
-    float tempoPassado = 0.0f;
     float tempoRestante;
     float tempoFase1 = 40.0f;
     char *texto = NULL;
@@ -145,9 +144,8 @@ int main(void)
 
     PlayMusicStream(theme);
     SetMusicVolume(theme, (float)0.2);
-
     float timePlayed = 0.0f;
-    bool pause = false;
+
 
     while (!botaoClicado) // Detect window close button or ESC key
     {
@@ -205,7 +203,6 @@ int main(void)
         PlayMusicStream(transicao);
         SetMusicVolume(transicao, (float)0.2);
         timePlayed = 0.0f;
-        pause = false;
 
         UpdateMusicStream(transicao);
         SetMusicPitch(transicao, pitch);
@@ -230,7 +227,6 @@ int main(void)
             PlayMusicStream(music);
             SetMusicVolume(music, (float)0.1);
             timePlayed = 0.0f;
-            pause = false;
 
             //The game
             while (fase == 0 && !WindowShouldClose())
@@ -240,9 +236,6 @@ int main(void)
 
                 //calcula tempo
                 if(timeElapsed == 0) tempoRestante = tempoFase1;
-                else tempoRestante -= GetFrameTime();
-
-                texto = mostrarTempo(tempoRestante);
 
                 // Get timePlayed scaled to bar dimensions
                 timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
@@ -331,11 +324,13 @@ int main(void)
                     DrawTextEx(fontStart, "1", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
                 } else {
                     DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 95, 1.5f, YELLOW);
-                    DrawText(texto, body->position.x + 250, body->position.y - 250, 50, YELLOW);
+                    DrawText(texto, body->position.x + 650, body->position.y + 250, 50, YELLOW);
                 }
                 if(timeElapsed > 90) {
                     body->velocity.x = VELOCITY;
                     follower->velocity.x = VELOCITY;
+                    tempoRestante -= GetFrameTime();
+                    texto = mostrarTempo(tempoRestante);
                 }
               
                 // Draw created physics bodies
