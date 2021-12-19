@@ -1,9 +1,10 @@
 #include "raylib.h"
 #include <stdio.h>
-#include "extras/physac.h"
 
 #define NUM_FRAMES 3
 #define PHYSAC_IMPLEMENTATION
+
+#include "extras/physac.h"
 
 #define VELOCITY 0.5f
 
