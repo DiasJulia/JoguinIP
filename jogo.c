@@ -2,6 +2,8 @@
 #define NUM_FRAMES 3
 #define PHYSAC_IMPLEMENTATION
 #include "extras/physac.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define VELOCITY 0.5f
 
@@ -23,6 +25,18 @@ void aumentar(PhysicsBody *body)
 
     *body = CreatePhysicsBodyRectangle(position, 50, 80, 1);
     (*body)->isGrounded = isGrounded;
+}
+
+char *mostrarTempo(float tempoRestante){
+    int minutos = tempoRestante / 60;
+    int segundos = ((int)tempoRestante) % 60;
+    char *texto = (char *) calloc(20, sizeof(char));
+    //char *texto = (char *)calloc(20, sizeof(char));
+    if(texto == NULL) exit(1);
+
+    sprintf(texto, "0%d:%d", minutos, segundos);
+
+    return texto;
 }
 
 int main(void)
@@ -49,10 +63,9 @@ int main(void)
     music.looping = true;
     pitch = 1.0f;
 
-    const char message[128] = "ALO ALO, cabou  a luz\n";
-    int framesCounter = 0; //mensagem de transição
+    const char message[300] = "ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM para o caminho certo e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n";
+    int framesCounter = 0;  //mensagem de transição
     int lifes = 5;
-    float posAnterior;
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -109,9 +122,14 @@ int main(void)
     floor->enabled = false;
     //floor2->enabled = false;
 
+    //tempo e flags
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
+    float tempoPassado = 0.0f;
+    float tempoRestante;
+    float tempoFase1 = 40.0f;
+    char *texto = NULL;
 
     // Create movement physics body
     PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 80, 1);
@@ -202,10 +220,10 @@ int main(void)
 
                 ClearBackground(BLACK);
 
-                DrawText(TextSubtext(message, 0, framesCounter / 10), 210, 160, 20, MAROON);
+           DrawText(TextSubtext(message, 0, framesCounter/10), 50, 160, 15, MAROON);
 
-                DrawText("PRESS [ENTER] to SKIP!", 240, 260, 20, LIGHTGRAY);
-                DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
+            DrawText("PRESSIONE ENTER PARA JOGAR!", 230, 300, 20, LIGHTGRAY);
+
 
                 EndDrawing();
             }
@@ -221,6 +239,12 @@ int main(void)
             {
                 UpdateMusicStream(music);
                 SetMusicPitch(music, pitch);
+
+                //calcula tempo
+                if(timeElapsed == 0) tempoRestante = tempoFase1;
+                else tempoRestante -= GetFrameTime();
+
+                texto = mostrarTempo(tempoRestante);
 
                 // Get timePlayed scaled to bar dimensions
                 timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
@@ -240,8 +264,9 @@ int main(void)
                         timeSlide = 0;
                     }
                 }
-                //************************************************************************************************
-                if (body->position.y > (float)screenHeight + 2000 || body->position.x == posAnterior) // Reset physics input
+
+//************************************************************************************************
+                if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
@@ -305,26 +330,15 @@ int main(void)
 
                 Font fontStart = LoadFont("resources/fonts/mecha.png");
 
-                if (timeElapsed <= 30)
-                {
-                    DrawTextEx(fontStart, "3", (Vector2){screenWidth / 2, screenHeight / 2 - 150}, 110, 0.0f, YELLOW);
-                }
-                else if (timeElapsed <= 60)
-                { //2
-                    DrawTextEx(fontStart, "2", (Vector2){screenWidth / 2, screenHeight / 2 - 150}, 110, 0.0f, YELLOW);
-                }
-                else if (timeElapsed <= 90)
-                { //1
-                    DrawTextEx(fontStart, "1", (Vector2){screenWidth / 2, screenHeight / 2 - 150}, 110, 0.0f, YELLOW);
-                }
-                else
-                {
-                    DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight / 2 - 150}, 95, 1.5f, YELLOW);
-                }
-                if (timeElapsed > 90)
-                {
-                    body->velocity.x = VELOCITY;
-                    follower->velocity.x = VELOCITY;
+                if(timeElapsed <= 30){
+                    DrawTextEx(fontStart, "3", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else if(timeElapsed <= 60){ //2
+                    DrawTextEx(fontStart, "2", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else if(timeElapsed <= 90){ //1
+                    DrawTextEx(fontStart, "1", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 110, 0.0f, YELLOW);
+                } else {
+                    DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight/2 - 150}, 95, 1.5f, YELLOW);
+                    DrawText(texto, body->position.x + 250, body->position.y - 250, 50, YELLOW);
                 }
 
                 // Draw created physics bodies
@@ -393,6 +407,14 @@ int main(void)
             UnloadTexture(bricks);
             UnloadTexture(caixote);
             UnloadTexture(taxi);
+        
+        free(texto);
+        UnloadTexture(runner);
+        UnloadTexture(ufo);
+        UnloadTexture(cenario);
+        UnloadTexture(bricks);
+        UnloadTexture(caixote);
+        UnloadTexture(taxi);
         }
         else
         {
@@ -411,7 +433,8 @@ int main(void)
             DrawTexture(texture, 0, 0, WHITE);
 
             DrawTextureRec(button, sourceRec, (Vector2){btnBounds.x, btnBounds.y}, WHITE); // Draw button frame
-            DrawText("INICIAR O JOGO", 200, 100, 50, WHITE);
+            DrawText("SEJA BEM-VINDO AO", 225, 100, 30, WHITE);
+            DrawText("DANIEL PASSA A GENTE!", 200, 150, 30, WHITE);
 
             //DrawText("Espaço: Pular", 300, 100, 50, WHITE);
 
