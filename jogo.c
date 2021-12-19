@@ -28,7 +28,7 @@ void aumentar(PhysicsBody *body){
 char *mostrarTempo(float tempoRestante){
     int minutos = tempoRestante / 60;
     int segundos = ((int)tempoRestante) % 60;
-    char *texto = (char *)calloc(20, sizeof(char));
+    char *texto = (char *) calloc(20, sizeof(char));
     //char *texto = (char *)calloc(20, sizeof(char));
     if(texto == NULL) exit(1);
 
@@ -64,7 +64,6 @@ int main(void)
     const char message[128] = "ALO ALO, cabou  a luz\n";
     int framesCounter = 0;  //mensagem de transição
     int lifes = 5;
-    float posAnterior;
 
     // Define frame rectangle for drawing
     float frameHeight = (float)button.height / NUM_FRAMES;
@@ -127,7 +126,7 @@ int main(void)
     int timeSlide = 0;
     float tempoPassado = 0.0f;
     float tempoRestante;
-    int tempoFase1 = 40.0f;
+    float tempoFase1 = 40.0f;
     char *texto = NULL;
 
     // Create movement physics body
@@ -264,7 +263,7 @@ int main(void)
                     }
                 }
 //************************************************************************************************
-                if (body->position.y > (float)screenHeight + 2000 || body->position.x == posAnterior) // Reset physics input
+                if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
