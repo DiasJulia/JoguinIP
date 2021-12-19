@@ -12,7 +12,7 @@ void abaixar(PhysicsBody *body){
     int isGrounded = (*body)->isGrounded;
     DestroyPhysicsBody(*body);
 
-    *body = CreatePhysicsBodyRectangle(position, 50, 25, 1);
+    *body = CreatePhysicsBodyRectangle(position, 50, 40, 1);
     (*body)->isGrounded = isGrounded;
 }
 
@@ -21,7 +21,7 @@ void aumentar(PhysicsBody *body){
     int isGrounded = (*body)->isGrounded;
     DestroyPhysicsBody(*body);
 
-    *body = CreatePhysicsBodyRectangle(position, 50, 50, 1);
+    *body = CreatePhysicsBodyRectangle(position, 50, 80, 1);
     (*body)->isGrounded = isGrounded;
 }
 
@@ -97,12 +97,12 @@ int main(void)
     PhysicsBody floor2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight + 100}, 2000, 100, 10);
     PhysicsBody caixa = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1000, (float)screenHeight - 100}, 100, 100, 10);
     PhysicsBody caixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 500, (float)screenHeight - 100}, 100, 100, 10);
-    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 225}, 50, 300, 10);
-    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + 1500, (float)screenHeight - 250}, 50, 300, 10);
+    PhysicsBody naoSeiONome2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2900, (float)screenHeight - 150}, 50, 300, 10);
     PhysicsBody caixa3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2600, (float)screenHeight}, 100, 100, 10);
-    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3200, (float)screenHeight - 150}, 50, 300, 10);
     PhysicsBody caixa4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3600, (float)screenHeight}, 100, 100, 10);
-    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 125}, 50, 300, 10);
+    PhysicsBody naoSeiONome4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3800, (float)screenHeight - 150}, 50, 300, 10);
 
     // Disable dynamics to floor and walls physics bodies
     naoSeiONome4->enabled = false;
@@ -129,10 +129,8 @@ int main(void)
     char *texto = NULL;
 
     // Create movement physics body
-    PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
-    PhysicsBody follower = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 50, 1);
+    PhysicsBody body = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, screenHeight / 2.0f}, 50, 80, 1);
     body->freezeOrient = true; // Constrain body rotation to avoid little collision torque amounts
-    follower->freezeOrient = true;
 
     Camera2D camera = {0};
     camera.target = body->position;
@@ -179,10 +177,10 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
-            Texture2D caixote = LoadTexture("resources/img/caixote.png");
+            Texture2D caixote = LoadTexture("resources/caixote.png");
             Texture2D cenario = LoadTexture("resources/img/cidade.png");
-            Texture2D bricks = LoadTexture("resources/img/bricks.png");
-            Texture2D taxi = LoadTexture("resources/img/taxi.png");
+            Texture2D bricks = LoadTexture("resources/bricks.png");
+            Texture2D taxi = LoadTexture("resources/img/taxi-2.png");
             Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
             Texture2D ufo = LoadTexture("resources/img/navepequena.png");
             Texture2D heart = LoadTexture("resources/img/heart.png");
@@ -190,10 +188,10 @@ int main(void)
             transicao.looping = true;
 
             
-        Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.2, (float)runner.height};
+        Rectangle sourceRecRunner = {0, 0, (float)runner.width / 11.25, (float)runner.height};
 
         //Animations
-        float runnerWidth = (float)runner.width / 10.4;
+        float runnerWidth = (float)runner.width / 10.45;
         int runnerFrames = 6;
         float runnertimer = 0.0f;
         int runnerFrame = 0;
@@ -268,12 +266,10 @@ int main(void)
                     fase = 0;
                 }
 //*************************************************************************************************
-                if(IsKeyPressed(KEY_DOWN) && !isShortened && body->isGrounded){
+                if(IsKeyPressed(KEY_DOWN) && body->isGrounded){
                     abaixar(&body);
                     isShortened = 1;                   
                 }
-
-                follower->position = (Vector2){body->position.x - 500, body->position.y};
                 
                 if(isShortened == 1 && body->isGrounded){
                     body->velocity.x = VELOCITY/1.5;
@@ -306,10 +302,10 @@ int main(void)
                 DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
                 DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
                 DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
-                DrawTexture(taxi, screenWidth / 2.0f + 1475, (float)screenHeight - 375 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 2875, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi,screenWidth + 3175, (float)screenHeight - 275 -150, WHITE);
-                DrawTexture(taxi, screenWidth + 3775, (float)screenHeight -275 -150, WHITE);
+                DrawTexture(taxi, screenWidth / 2.0f + 1345, (float)screenHeight - 400 -180, WHITE);
+                DrawTexture(taxi, screenWidth + 2745, (float)screenHeight - 300 -180, WHITE);
+                DrawTexture(taxi,screenWidth + 3045, (float)screenHeight - 300 -180, WHITE);
+                DrawTexture(taxi, screenWidth + 3645, (float)screenHeight -300 -180, WHITE);
                 for(int i=0; i<lifes; i++){
                     DrawTexture(heart, body->position.x - 800 + (i+1)*50, body->position.y - 550, WHITE);
                 }
@@ -328,7 +324,6 @@ int main(void)
                 }
                 if(timeElapsed > 90) {
                     body->velocity.x = VELOCITY;
-                    follower->velocity.x = VELOCITY;
                     tempoRestante -= GetFrameTime();
                     texto = mostrarTempo(tempoRestante);
                 }
@@ -364,11 +359,13 @@ int main(void)
             runnerFrame = runnerFrame % runnerFrames;
             if (isShortened)
             {
+                sourceRecRunner.width = (float)runner.width / 9.0;
                 sourceRecRunner.x = runnerWidth * 6;
-                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
+                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 95}, WHITE);
             }
             else
             {
+                sourceRecRunner.width = (float)runner.width / 11.2;
 
             //    DrawText(TextFormat("Score: %i", body->velocity.y), 10, 10, 10, WHITE);
                 if(body->velocity.y<0){
@@ -381,11 +378,9 @@ int main(void)
                 {
                     sourceRecRunner.x = runnerWidth * runnerFrame;
                 }
-                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 100}, WHITE);
+                
+                DrawTextureRec(runner, sourceRecRunner, (Vector2){body->position.x - 40, body->position.y - 90}, WHITE);
             }
-           //     DrawText("Use 'ARROWS' to move player", 10, 10, 10, WHITE);
-            //    DrawText("Press 'R' to reset example", 10, 30, 10, WHITE);
-
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
