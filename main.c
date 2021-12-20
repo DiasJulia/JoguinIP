@@ -137,7 +137,7 @@ void gameOver()
         BeginDrawing();
         ClearBackground(BLACK);
         DrawText("VOCE PERDEU", 165, 130, 75, WHITE);
-        DrawText("O AGIOTA PEGOU ACM,\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
+        DrawText("Acm não efetuou o pagamento a tempo\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
         EndDrawing();
     }
     UnloadSound(mario);
@@ -347,7 +347,7 @@ int faseUm()
 
         ClearBackground(GetColor(0x052c46ff));
 
-        DrawTexture(background, body->position.x - 800, -(float)screenHeight + 300, WHITE);
+        DrawTexture(background, body->position.x - 800, -(float)screenHeight - 250, WHITE);
         DrawTexture(ground, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
         DrawTexture(ground, screenWidth + 2300, (float)screenHeight + 50, WHITE);
         DrawTexture(box, screenWidth / 2.0f + 950, (float)screenHeight - 150, WHITE);
@@ -456,12 +456,14 @@ int faseDois()
     PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
     PhysicsBody aplataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
     PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
-    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 320}, 60, 70, 10);
-    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 260}, 50, 200, 30);
-    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4020, (float)screenHeight - 260}, 150, 200, 30);
-    PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 400, (float)screenHeight - 240}, 70, 260, 30);
-    PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
+    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 400}, 50, 200, 10);
+    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 280}, 50, 200, 30);
+    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 280}, 50, 200, 30);
+    PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
+    PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1000, (float)screenHeight - 240}, 70, 260, 30);
+    PhysicsBody abox3 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 50, (float)screenHeight - 100}, 100, 100, 30);
 
+    abox->enabled = false;
     aplataforma->enabled = false;
     aplataforma2->enabled = false;
     aplataforma3->enabled = false;
@@ -475,9 +477,12 @@ int faseDois()
     abloco->enabled = false;
     abox->enabled = false;
     abox2->enabled = false;
+    abox3->enabled = false;
 
     Texture2D runner = LoadTexture("resources/personagens/runner.png");
     Texture2D heart = LoadTexture("resources/img/heart.png");
+    Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
+    Texture2D arvore = LoadTexture("resources/img/arvorecommamaco.png");
 
     int isShortened = 0;
     int timeElapsed = 0;
@@ -595,6 +600,10 @@ int faseDois()
         BeginMode2D(camera);
 
         ClearBackground(GetColor(0x052c46ff));
+        
+        DrawTexture(jungle, body->position.x - 800, -(float)screenHeight - 100, WHITE);
+        
+        
 
         for (int i = 0; i < lifes; i++)
             DrawTexture(heart, body->position.x - 800 + (i + 1) * 50, body->position.y - 550, WHITE);
@@ -704,11 +713,11 @@ int main()
 
     initialScreen(fxButton);
 
-    preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
+    preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n", fxButton);
 
-    if (!faseUm())
-       gameOver();
-    else if (!faseDois())
+    /*if (!faseUm())
+       gameOver();*/
+    if (!faseDois())
         gameOver();
     else congratulations();
 
