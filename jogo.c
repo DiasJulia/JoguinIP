@@ -142,6 +142,14 @@ int main(void)
     camera.rotation = 0.0f;
     camera.zoom = 0.5f;
 
+    Texture2D background = LoadTexture("resources/img/cyberpunk_street_background.png");
+    Texture2D midground = LoadTexture("resources/img/cyberpunk_street_midground.png");
+    Texture2D foreground = LoadTexture("resources/img/cyberpunk_street_foreground.png");
+
+    float scrollingBack = 0.0f;
+    float scrollingMid = 0.0f;
+    float scrollingFore = 0.0f;
+
     SetTargetFPS(60);
 
     PlayMusicStream(theme);
@@ -182,10 +190,11 @@ int main(void)
             UnloadMusicStream(theme);
             Texture2D caixote = LoadTexture("resources/caixote.png");
             Texture2D cenario = LoadTexture("resources/img/cidade.png");
-            Texture2D bricks = LoadTexture("resources/bricks.png");
+            Texture2D bricks = LoadTexture("resources/img/floor12.png");
+            Texture2D bricksbg = LoadTexture("resources/img/floor11.png");
             Texture2D taxi = LoadTexture("resources/img/taxi.png");
             Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
-            Texture2D ufo = LoadTexture("resources/img/navepequena.png");
+            Texture2D ufo = LoadTexture("resources/img/ufo.png");
             Texture2D heart = LoadTexture("resources/img/heart.png");
             Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
             transicao.looping = true;
@@ -211,7 +220,7 @@ int main(void)
                 if (IsKeyDown(KEY_SPACE))
                     framesCounter += 8;
                 else
-                    framesCounter+=5;
+                    framesCounter += 5;
 
                 BeginDrawing();
 
@@ -259,14 +268,14 @@ int main(void)
                 //************************************************************************************************
                 if (body->position.y > (float)screenHeight + 2000) // Reset physics input
                 {
-                    
+
                     // Reset movement physics body position, velocity and rotation
                     body->position = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f};
                     body->velocity = (Vector2){0, 0};
                     SetPhysicsBodyRotation(body, 0);
                     lifes--;
                 }
-                if (lifes == 0 || ((int)tempoRestante) % 60 ==0)
+                if (lifes == 0 || ((int)tempoRestante) % 60 == 0)
                 {
                     fase = 0;
                 }
@@ -289,23 +298,47 @@ int main(void)
                 if (body->position.x > screenWidth + 4300)
                     fase = 1;
 
+                scrollingBack -= 0.03f;
+                scrollingMid -= 0.5f;
+                scrollingFore -= 1.0f;
+
+                // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
+                if (scrollingBack <= -background.width * 2)
+                    scrollingBack = 0;
+                if (scrollingMid <= -midground.width * 2)
+                    scrollingMid = 0;
+                if (scrollingFore <= -foreground.width * 2)
+                    scrollingFore = 0;
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
 
                 BeginMode2D(camera);
 
-                ClearBackground(BLACK);
+                ClearBackground(GetColor(0x052c46ff));
+                DrawTextureEx(background, (Vector2){scrollingBack, -200}, 0.0f, 2.0f, WHITE);
+                DrawTextureEx(background, (Vector2){background.width * 2 + scrollingBack, -200}, 0.0f, 2.0f, WHITE);
+
+                // Draw midground image twice
+                DrawTextureEx(midground, (Vector2){scrollingMid, -250}, 0.0f, 2.0f, WHITE);
+                DrawTextureEx(midground, (Vector2){midground.width * 3 + scrollingMid, -250}, 0.0f, 2.0f, WHITE);
+                DrawTextureEx(midground, (Vector2){midground.width * 6 + scrollingMid, -250}, 0.0f, 2.0f, WHITE);
+
+                // Draw foreground image twice
+                DrawTextureEx(foreground, (Vector2){scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
+                DrawTextureEx(foreground, (Vector2){foreground.width * 3 + scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
+                DrawTextureEx(foreground, (Vector2){foreground.width * 6 + scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
 
                 //desenhar as coisas do ambiente antes do personagem
-                DrawTexture(cenario, -screenWidth / 2.0f, -screenHeight / 2.0f - 250, WHITE);
+
+                
+                DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
+                DrawTexture(bricksbg, screenWidth + 1400, (float)screenHeight - 50, WHITE);
+                DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
                 DrawTexture(caixote, screenWidth / 2.0f + 950, (float)screenHeight - 150, WHITE);
                 DrawTexture(caixote, screenWidth + 3550, (float)screenHeight - 50, WHITE);
                 DrawTexture(caixote, screenWidth + 2550, (float)screenHeight - 50, WHITE);
                 DrawTexture(caixote, screenWidth / 2.0f + 450, (float)screenHeight - 150, WHITE);
-                DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
-                DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
-                DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
                 DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
                 DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
                 DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
@@ -403,14 +436,14 @@ int main(void)
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
-            if (fase ==0)
+            if (fase == 0)
             {
                 PlaySound(mario);
             }
-            
+
             while (fase == 0 && !WindowShouldClose())
             {
-                
+
                 while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) //tela de transição
                 {
                     BeginDrawing();
@@ -459,6 +492,10 @@ int main(void)
             //----------------------------------------------------------------------------------
         }
     }
+
+    UnloadTexture(background); // Unload background texture
+    UnloadTexture(midground);  // Unload midground texture
+    UnloadTexture(foreground); // Unload foreground texture
 
     UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
