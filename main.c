@@ -681,8 +681,8 @@ int main()
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
 
-    //if (!faseUm())
-       //gameOver();
+    if (!faseUm())
+       gameOver();
 
     if (!faseDois())
         gameOver();
