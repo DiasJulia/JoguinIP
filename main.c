@@ -194,7 +194,7 @@ void preGame(char *message, Sound somBotao)
     UnloadSound(somBotao); //fechando nessa função para dar tempo de tocar o som
 }
 
-//phases
+ //Phases
 
 int faseUm()
 {
@@ -235,12 +235,15 @@ int faseUm()
     Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
     Texture2D ufo = LoadTexture("resources/img/ufo.png");
     Texture2D heart = LoadTexture("resources/img/heart.png");
+    Music musiquinha = LoadMusicStream("resources/musiquinha.mp3");
+    setMusic(musiquinha, &timePlayed);
 
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
     float timeRemaining;
     float timeFase1 = 40.0f;
+    float timeFase2 = 54.0f;
     char *timer = NULL;
     int lifes = 3;
 
@@ -263,6 +266,8 @@ int faseUm()
 
     while (!WindowShouldClose())
     {
+        playMusic(musiquinha, &timePlayed);
+
         if (timeElapsed == 0)
             timeRemaining = timeFase1;
 
@@ -345,7 +350,7 @@ int faseUm()
 
         BeginMode2D(camera);
 
-        ClearBackground(GetColor(0x052c46ff));
+        ClearBackground(BLACK);
 
         DrawTexture(background, body->position.x - 800, -(float)screenHeight - 250, WHITE);
         DrawTexture(ground, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
@@ -479,18 +484,20 @@ int faseDois()
     abox2->enabled = false;
     abox3->enabled = false;
 
-    Texture2D runner = LoadTexture("resources/personagens/runner.png");
+    Texture2D runner = LoadTexture("resources/personagens/runner9.png");
     Texture2D heart = LoadTexture("resources/img/heart.png");
     Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
     Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
     Texture2D chao = LoadTexture("resources/img/grassfloor.png");
     Texture2D bush = LoadTexture("resources/img/moita.png");
+    Music indiana = LoadMusicStream("resources/indiana.mp3");
+    setMusic(indiana, &timePlayed);
 
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
     float timeRemaining;
-    float timeFase1 = 40.0f;
+    float timeFase2 = 54.0f;
     char *timer = NULL;
     int lifes = 3;
 
@@ -529,8 +536,10 @@ int faseDois()
 
     while (!WindowShouldClose())
     {
+        playMusic(indiana, &timePlayed);
+        
         if (timeElapsed == 0)
-            timeRemaining = timeFase1;
+            timeRemaining = timeFase2;
 
         camera.target = body->position;
 
@@ -601,8 +610,7 @@ int faseDois()
 
         BeginMode2D(camera);
 
-        ClearBackground(GetColor(0x052c46ff));
-        
+        ClearBackground(DARKGREEN);
         DrawTexture(jungle, body->position.x - 800, -(float)screenHeight - 100, WHITE);
         DrawTexture(arvore, screenWidth + 500, (float)screenHeight - 450, WHITE);
         DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
@@ -623,7 +631,7 @@ int faseDois()
     PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
     PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1000, (float)screenHeight - 240}, 70, 260, 30);
     PhysicsBody abox3 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 50, (float)screenHeight - 100}, 100, 100, 30);*/
-        
+
         
 
         for (int i = 0; i < lifes; i++)
@@ -710,6 +718,7 @@ int faseDois()
 
     free(timer);
     UnloadTexture(runner);
+    UnloadMusicStream(indiana);
 
     bodiesCount = GetPhysicsBodiesCount();
     for (int i = 0; i < bodiesCount; i++)
@@ -722,7 +731,6 @@ int faseDois()
 }
 
 //main
-
 int main()
 {
     SetConfigFlags(FLAG_MSAA_4X_HINT); // NOTE: Try to enable MSAA 4X
@@ -735,12 +743,13 @@ int main()
     initialScreen(fxButton);
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n", fxButton);
-
-    /*if (!faseUm())
-       gameOver();*/
-    if (!faseDois())
+/* 
+    if (!faseUm())
+       gameOver();
+ */
+     if (!faseDois())
         gameOver();
-    else congratulations();
+
 
     congratulations(); 
     CloseAudioDevice();
