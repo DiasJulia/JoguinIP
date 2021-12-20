@@ -169,7 +169,7 @@ void congratulations()
     UnloadTexture(daniel);
 }
 
-void preGame(char *message, Sound somBotao)
+void preFase(char *message)
 {
     Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
     setMusic(transicao, &timePlayed);
@@ -189,12 +189,11 @@ void preGame(char *message, Sound somBotao)
         ClearBackground(BLACK);
 
         DrawText(TextSubtext(message, 0, framesCounter / 10), 30, 50, 23.12, YELLOW);
-        DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 171, 300, 20, LIGHTGRAY);
+        DrawText("[ENTER] PARA CONTINUAR!", 171, 300, 20, LIGHTGRAY);
 
         EndDrawing();
     }
     UnloadMusicStream(transicao);
-    UnloadSound(somBotao); //fechando nessa função para dar tempo de tocar o som
 }
 
  //Phases
@@ -768,11 +767,14 @@ int main()
     SetTargetFPS(60);
 
     initialScreen(fxButton);
+    
+    preFase("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
+    UnloadSound(fxButton);
 
-    preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n", fxButton);
- 
     if (!faseUm())
        gameOver();
+
+    preFase(" Agora ACM se aproxima de seu destino\n passando pelo seu maior desafio,\n cruzar a Amazonia, vulgo bairro de Ze Daniel,\n para pagar o que devia ao agiota.\n");
  
      if (!faseDois())
         gameOver();
