@@ -242,8 +242,7 @@ int faseUm()
     int timeElapsed = 0;
     int timeSlide = 0;
     float timeRemaining;
-    float timeFase1 = 40.0f;
-    float timeFase2 = 54.0f;
+    float timeFase1 = 25.0f;
     char *timer = NULL;
     int lifes = 3;
 
@@ -282,6 +281,7 @@ int faseUm()
             UnloadTexture(ground);
             UnloadTexture(box);
             UnloadTexture(taxiTexture);
+            UnloadMusicStream(musiquinha);
 
             int bodiesCount = GetPhysicsBodiesCount();
             for (int i = 0; i < bodiesCount; i++)
@@ -336,6 +336,7 @@ int faseUm()
             UnloadTexture(ground);
             UnloadTexture(box);
             UnloadTexture(taxiTexture);
+            UnloadMusicStream(musiquinha);
 
             int bodiesCount = GetPhysicsBodiesCount();
             for (int i = 0; i < bodiesCount; i++)
@@ -362,7 +363,6 @@ int faseUm()
         DrawTexture(ufo, screenWidth + 1550, (float)screenHeight - 190, WHITE);
         DrawTexture(ufo, screenWidth + 1750, (float)screenHeight - 340, WHITE);
         DrawTexture(ufo, screenWidth + 1950, (float)screenHeight - 40, WHITE);
-
         DrawTexture(taxiTexture, screenWidth / 2.0f + 1345, (float)screenHeight - 400 - 180, WHITE);
         DrawTexture(taxiTexture, screenWidth + 2745, (float)screenHeight - 300 - 180, WHITE);
         DrawTexture(taxiTexture, screenWidth + 3045, (float)screenHeight - 300 - 180, WHITE);
@@ -438,6 +438,7 @@ int faseUm()
     UnloadTexture(ground);
     UnloadTexture(box);
     UnloadTexture(taxiTexture);
+    UnloadMusicStream(musiquinha);
 
     int bodiesCount = GetPhysicsBodiesCount();
     for (int i = 0; i < bodiesCount; i++)
@@ -460,15 +461,14 @@ int faseDois()
     PhysicsBody aplataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
     PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
     PhysicsBody aplataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
-    PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
-    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 400}, 50, 200, 10);
-    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 280}, 50, 200, 30);
-    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 280}, 50, 200, 30);
+    PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 40}, 600, 20, 10);
+    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 230}, 70, 260, 10);
+    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 310}, 70, 260, 30);
+    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 310}, 70, 260, 30);
     PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
     PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1000, (float)screenHeight - 240}, 70, 260, 30);
     PhysicsBody abox3 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 50, (float)screenHeight - 100}, 100, 100, 30);
 
-    abox->enabled = false;
     aplataforma->enabled = false;
     aplataforma2->enabled = false;
     aplataforma3->enabled = false;
@@ -489,8 +489,9 @@ int faseDois()
     Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
     Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
     Texture2D chao = LoadTexture("resources/img/grassfloor.png");
-    Texture2D chao3 = LoadTexture("resources/img/grassfloor9.png");
     Texture2D bush = LoadTexture("resources/img/moita.png");
+    Texture2D chao3 = LoadTexture("resources/img/grassfloor9.png");
+    Texture2D chao2 = LoadTexture("resources/img/chao2.png");
     Texture2D plataforma1 = LoadTexture("resources/img/piso1.png");
     Texture2D plataforma2 = LoadTexture("resources/img/piso2.png");
     Texture2D plataforma3 = LoadTexture("resources/img/piso3.png");
@@ -498,17 +499,12 @@ int faseDois()
     Texture2D plataforma5 = LoadTexture("resources/img/piso5.png");
     Music indiana = LoadMusicStream("resources/indiana.mp3");
     setMusic(indiana, &timePlayed);
-/*     PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
-    PhysicsBody aplataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
-    PhysicsBody aplataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
-    PhysicsBody aplataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
-    PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30); */
 
     int isShortened = 0;
     int timeElapsed = 0;
     int timeSlide = 0;
     float timeRemaining;
-    float timeFase2 = 54.0f;
+    float timeFase2 = 30.0f;
     char *timer = NULL;
     int lifes = 3;
 
@@ -541,7 +537,7 @@ int faseDois()
             int jj = (((j + 1) < vertexCount) ? (j + 1) : 0); // Get next vertex or first to close the shape
             Vector2 vertexB = GetPhysicsShapeVertex(body, jj);
 
-            DrawLineV(vertexA, vertexB, GREEN); // Draw a line between two vertex positions
+            DrawLineV(vertexA, vertexB, BLACK); // Draw a line between two vertex positions
         }
     }
 
@@ -625,31 +621,21 @@ int faseDois()
         DrawTexture(jungle, body->position.x - 800, -(float)screenHeight - 100, WHITE);
         DrawTexture(arvore, screenWidth + 500, (float)screenHeight - 450, WHITE);
         DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
+        DrawTexture(arvore, screenWidth + 2715 -70, (float)screenHeight - 360 -100, WHITE);
+        DrawTexture(arvore, screenWidth + 4165 -70, (float)screenHeight - 440 -100, WHITE);
+        DrawTexture(arvore, screenWidth + 3885 -70, (float)screenHeight - 440 -100, WHITE);
         DrawTexture(bush,  screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 150, (float)screenHeight - 200, WHITE);
         DrawTexture(chao, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2 + 800, (float)screenHeight - 50, WHITE);
         DrawTexture(chao3, screenWidth + 3950 - 400, (float)screenHeight - 120, WHITE);
+        DrawTexture(chao2, screenWidth + 2750 - 300, (float)screenHeight - 50, WHITE); //***
         DrawTexture(plataforma1, screenWidth + 1550, (float)screenHeight - 170, WHITE);
         DrawTexture(plataforma2, screenWidth + 1810, (float)screenHeight - 210, WHITE);
         DrawTexture(plataforma3, screenWidth + 2020, (float)screenHeight - 230, WHITE);
         DrawTexture(plataforma4, screenWidth + 2240, (float)screenHeight - 260, WHITE);
-        DrawTexture(plataforma5, screenWidth + 3230, (float)screenHeight - 200, WHITE);
-        //DrawTexture(chao, screenWidth / 2.0f, (float)screenHeight, WHITE);
-        
-        /*PhysicsBody afloor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10)
-    PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
-    PhysicsBody aplataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
-    PhysicsBody aplataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
-    PhysicsBody aplataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
-    PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
-    PhysicsBody aplataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
-    PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
-    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 400}, 50, 200, 10);
-    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 280}, 50, 200, 30);
-    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 280}, 50, 200, 30);
-    PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
-    PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1000, (float)screenHeight - 240}, 70, 260, 30);
-    PhysicsBody abox3 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 50, (float)screenHeight - 100}, 100, 100, 30);*/
-
+        DrawTexture(plataforma5, screenWidth + 3240, (float)screenHeight - 205, WHITE);
+/*     PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 230}, 70, 260, 10);
+    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 310}, 70, 260, 30);
+    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 310}, 70, 260, 30); */
         
 
         for (int i = 0; i < lifes; i++)
@@ -675,27 +661,7 @@ int faseDois()
             timer = mostrarTempo(timeRemaining);
             DrawTextEx(fontStart, "START", (Vector2){screenWidth / 2, screenHeight / 2 - 150}, 95, 1.5f, YELLOW);
             DrawText(timer, body->position.x + 650, body->position.y + 250, 50, YELLOW);
-        }
-
-        int bodiesCount = GetPhysicsBodiesCount();
-        for (int i = 0; i < bodiesCount; i++)
-        {
-            PhysicsBody body = GetPhysicsBody(i);
-
-            int vertexCount = GetPhysicsShapeVerticesCount(i);
-            for (int j = 0; j < vertexCount; j++)
-            {
-                // Get physics bodies shape vertices to draw lines
-                // Note: GetPhysicsShapeVertex() already calculates rotation transformations
-                Vector2 vertexA = GetPhysicsShapeVertex(body, j);
-
-                int jj = (((j + 1) < vertexCount) ? (j + 1) : 0); // Get next vertex or first to close the shape
-                Vector2 vertexB = GetPhysicsShapeVertex(body, jj);
-
-                DrawLineV(vertexA, vertexB, GREEN); // Draw a line between two vertex positions
-            }
-        }
-
+        }   
         //Animation load
         runnertimer += GetFrameTime();
 
@@ -735,6 +701,18 @@ int faseDois()
     }
 
     free(timer);
+    UnloadTexture(arvore);
+    UnloadTexture(heart);
+    UnloadTexture(jungle);
+    UnloadTexture(chao);
+    UnloadTexture(chao2);
+    UnloadTexture(chao3);
+    UnloadTexture(bush);
+    UnloadTexture(plataforma1);
+    UnloadTexture(plataforma2);
+    UnloadTexture(plataforma3);
+    UnloadTexture(plataforma4);
+    UnloadTexture(plataforma5);
     UnloadTexture(runner);
     UnloadMusicStream(indiana);
 
@@ -761,10 +739,10 @@ int main()
     initialScreen(fxButton);
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n", fxButton);
-/* 
+ 
     if (!faseUm())
        gameOver();
- */
+ 
      if (!faseDois())
         gameOver();
 
