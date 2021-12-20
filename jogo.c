@@ -54,9 +54,12 @@ int main(void)
     InitAudioDevice(); // Initialize audio device
 
     Sound mario = LoadSound("resources/mario.wav");
+    Sound ratinho = LoadSound("resources/ratinho.wav");
+
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
+    Texture2D cyber2 = LoadTexture("resources/img/cyber-4.png"); // background texture
 
     Music theme = LoadMusicStream("resources/musica_inicial.mp3");
     theme.looping = true;
@@ -78,7 +81,7 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
-    bool fase = 1;          //responsável por terminar o loop de codigo quando a fase terminar
+    int fase = 1;          //responsável por terminar o loop de codigo quando a fase terminar
     bool botaoClicado = 0;  //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
@@ -188,8 +191,8 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
-            Texture2D caixote = LoadTexture("resources/caixote.png");
-            Texture2D cenario = LoadTexture("resources/img/cidade.png");
+            Texture2D caixote = LoadTexture("resources/img/caixote.png");
+            Texture2D cenario = LoadTexture("resources/img/city-5.png");
             Texture2D bricks = LoadTexture("resources/img/floor12.png");
             Texture2D bricksbg = LoadTexture("resources/img/floor11.png");
             Texture2D taxi = LoadTexture("resources/img/taxi.png");
@@ -296,7 +299,7 @@ int main(void)
                     body->velocity.y = -VELOCITY * 4;
 
                 if (body->position.x > screenWidth + 4300)
-                    fase = 1;
+                    fase = 2;
 
                 scrollingBack -= 0.03f;
                 scrollingMid -= 0.5f;
@@ -316,24 +319,10 @@ int main(void)
                 BeginMode2D(camera);
 
                 ClearBackground(GetColor(0x052c46ff));
-                DrawTextureEx(background, (Vector2){scrollingBack, -200}, 0.0f, 2.0f, WHITE);
-                DrawTextureEx(background, (Vector2){background.width * 2 + scrollingBack, -200}, 0.0f, 2.0f, WHITE);
-
-                // Draw midground image twice
-                DrawTextureEx(midground, (Vector2){scrollingMid, -250}, 0.0f, 2.0f, WHITE);
-                DrawTextureEx(midground, (Vector2){midground.width * 3 + scrollingMid, -250}, 0.0f, 2.0f, WHITE);
-                DrawTextureEx(midground, (Vector2){midground.width * 6 + scrollingMid, -250}, 0.0f, 2.0f, WHITE);
-
-                // Draw foreground image twice
-                DrawTextureEx(foreground, (Vector2){scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
-                DrawTextureEx(foreground, (Vector2){foreground.width * 3 + scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
-                DrawTextureEx(foreground, (Vector2){foreground.width * 6 + scrollingFore-400, -250}, 0.0f, 3.0f, WHITE);
-
                 //desenhar as coisas do ambiente antes do personagem
 
-                
+                DrawTexture(cyber2, body->position.x - 800, -(float)screenHeight+300, WHITE);
                 DrawTexture(bricks, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000) / 2, (float)screenHeight - 50, WHITE);
-                DrawTexture(bricksbg, screenWidth + 1400, (float)screenHeight - 50, WHITE);
                 DrawTexture(bricks, screenWidth + 2300, (float)screenHeight + 50, WHITE);
                 DrawTexture(caixote, screenWidth / 2.0f + 950, (float)screenHeight - 150, WHITE);
                 DrawTexture(caixote, screenWidth + 3550, (float)screenHeight - 50, WHITE);
@@ -436,10 +425,7 @@ int main(void)
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
-            if (fase == 0)
-            {
-                PlaySound(mario);
-            }
+            if (fase == 0) PlaySound(mario);
 
             while (fase == 0 && !WindowShouldClose())
             {
@@ -454,7 +440,23 @@ int main(void)
 
                     EndDrawing();
                 }
-                UnloadSound(mario);
+                fase = -1;
+            }
+
+            if(fase == 2) PlaySound(ratinho);
+
+            while (fase == 2 && !WindowShouldClose())
+            {   
+                while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) //tela de transição
+                {
+                    BeginDrawing();
+                    ClearBackground(BLACK);
+                    DrawText("CONGRATULATIONS!!", 160, 85, 45, WHITE);
+                    DrawText("O PAGAMENTO FOI FEITO", 190, 200, 30, WHITE);
+                    DrawText("COM SUCESSO!!", 280, 230, 30, WHITE);
+                    DrawText("PRESS [ENTER] to RESTART!", 205, 330, 25, WHITE);
+                    EndDrawing();
+                }
                 fase = -1;
             }
 
@@ -462,6 +464,7 @@ int main(void)
             UnloadTexture(runner);
             UnloadTexture(ufo);
             UnloadTexture(cenario);
+            UnloadTexture(cyber2); // Unload background texture
             UnloadTexture(bricks);
             UnloadTexture(caixote);
             UnloadTexture(taxi);
@@ -493,9 +496,7 @@ int main(void)
         }
     }
 
-    UnloadTexture(background); // Unload background texture
-    UnloadTexture(midground);  // Unload midground texture
-    UnloadTexture(foreground); // Unload foreground texture
+    
 
     UnloadMusicStream(music);
     CloseAudioDevice(); // Close audio device
