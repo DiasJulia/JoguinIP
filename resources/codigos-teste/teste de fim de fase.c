@@ -54,6 +54,8 @@ int main(void)
     InitAudioDevice(); // Initialize audio device
 
     Sound mario = LoadSound("resources/mario.wav");
+    Sound ratinho = LoadSound("resources/ratinho.wav");
+
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
@@ -423,6 +425,9 @@ int main(void)
                 }
                 fase = -1;
             }
+
+            if(fase == 2) PlaySound(ratinho);
+
             while (fase == 2 && !WindowShouldClose())
             {   
                 while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) //tela de transição
@@ -435,7 +440,6 @@ int main(void)
                     DrawText("PRESS [ENTER] to RESTART!", 205, 330, 25, WHITE);
                     EndDrawing();
                 }
-                UnloadSound(mario);
                 fase = -1;
             }
 

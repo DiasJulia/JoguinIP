@@ -54,6 +54,8 @@ int main(void)
     InitAudioDevice(); // Initialize audio device
 
     Sound mario = LoadSound("resources/mario.wav");
+    Sound ratinho = LoadSound("resources/ratinho.wav");
+
     Sound fxButton = LoadSound("resources/img/buttonfx.wav");     // Load button sound
     Texture2D button = LoadTexture("resources/img/btn-bg.png");   // Load button texture
     Texture2D texture = LoadTexture("resources/img/unknown.png"); // background texture
@@ -78,7 +80,7 @@ int main(void)
 
     int btnState = 0;       // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
     bool btnAction = false; // Button action should be activated
-    bool fase = 1;          //responsável por terminar o loop de codigo quando a fase terminar
+    int fase = 1;          //responsável por terminar o loop de codigo quando a fase terminar
     bool botaoClicado = 0;  //responsável por manter a tea inicial enquanto o botão n for clicado
 
     Vector2 mousePoint = {0.0f, 0.0f};
@@ -180,9 +182,9 @@ int main(void)
             UnloadTexture(button); // Unload button texture
             UnloadTexture(texture);
             UnloadMusicStream(theme);
-            Texture2D caixote = LoadTexture("resources/caixote.png");
+            Texture2D caixote = LoadTexture("resources/img/caixote.png");
             Texture2D cenario = LoadTexture("resources/img/cidade.png");
-            Texture2D bricks = LoadTexture("resources/bricks.png");
+            Texture2D bricks = LoadTexture("resources/img/bricks.png");
             Texture2D taxi = LoadTexture("resources/img/taxi.png");
             Texture2D runner = LoadTexture("resources/personagens/runner9.png"); // Runner texture
             Texture2D ufo = LoadTexture("resources/img/navepequena.png");
@@ -287,7 +289,7 @@ int main(void)
                     body->velocity.y = -VELOCITY * 4;
 
                 if (body->position.x > screenWidth + 4300)
-                    fase = 1;
+                    fase = 2;
 
                 // Draw
                 //----------------------------------------------------------------------------------
@@ -403,10 +405,7 @@ int main(void)
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
-            if (fase ==0)
-            {
-                PlaySound(mario);
-            }
+            if (fase == 0) PlaySound(mario);
             
             while (fase == 0 && !WindowShouldClose())
             {
@@ -419,6 +418,23 @@ int main(void)
                     DrawText("VOCE PERDEU", 165, 130, 75, WHITE);
                     DrawText("O AGIOTA PEGOU ACM,\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
 
+                    EndDrawing();
+                }
+                fase = -1;
+            }
+
+            if(fase == 2) PlaySound(ratinho);
+
+            while (fase == 2 && !WindowShouldClose())
+            {   
+                while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose()) //tela de transição
+                {
+                    BeginDrawing();
+                    ClearBackground(BLACK);
+                    DrawText("CONGRATULATIONS!!", 160, 85, 45, WHITE);
+                    DrawText("O PAGAMENTO FOI FEITO", 190, 200, 30, WHITE);
+                    DrawText("COM SUCESSO!!", 280, 230, 30, WHITE);
+                    DrawText("PRESS [ENTER] to RESTART!", 205, 330, 25, WHITE);
                     EndDrawing();
                 }
                 fase = -1;
