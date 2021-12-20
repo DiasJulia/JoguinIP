@@ -483,7 +483,7 @@ int faseDois()
     Texture2D heart = LoadTexture("resources/img/heart.png");
     Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
     Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
-    Texture2D chao = LoadTexture("resources/img/chao-de-grama.png");
+    Texture2D chao = LoadTexture("resources/img/grassfloor.png");
     Texture2D bush = LoadTexture("resources/img/moita.png");
 
     int isShortened = 0;
@@ -607,7 +607,7 @@ int faseDois()
         DrawTexture(arvore, screenWidth + 500, (float)screenHeight - 450, WHITE);
         DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
         DrawTexture(bush,  screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 150, (float)screenHeight - 200, WHITE);
-        //DrawTexture(chao, screenWidth / 2.0f, (float)screenHeight, WHITE);
+        DrawTexture(chao, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2 + 800, (float)screenHeight - 50, WHITE);
         
         /*PhysicsBody afloor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10)
     PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
