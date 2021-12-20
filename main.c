@@ -113,8 +113,7 @@ void initialScreen(Sound fxButton)
         ClearBackground(RAYWHITE);
         DrawTexture(background, 0, 0, WHITE);
         DrawTextureRec(button, sourceRec, (Vector2){btnBounds.x, btnBounds.y}, WHITE); // Draw button frame
-        DrawText("SEJA BEM-VINDO AO", 225, 100, 30, WHITE);
-        DrawText("DANIEL PASSA A GENTE!", 200, 150, 30, WHITE);
+        DrawText("DANIEL DA NOTA PRA NOIS!", 200, 150, 32, WHITE);
         //DrawText("Espaço: Pular", 300, 100, 50, WHITE);
         EndDrawing();
     }
