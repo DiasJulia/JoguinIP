@@ -10,6 +10,9 @@
 #define screenWidth 800
 #define screenHeight 450
 
+const float pitch = 1.0f;
+float timePlayed = 0.0f;
+
 Camera2D camera = {0};
 
 //Basic Movement Functions
@@ -42,11 +45,18 @@ void setCamera(PhysicsBody body)
     camera.zoom = 0.5f;
 }
 
-void playMusic(Music theme)
+void setMusic(Music music, float *timePlayed)
 {
-    theme.looping = true;
-    PlayMusicStream(theme);
-    SetMusicVolume(theme, (float)0.2);
+    PlayMusicStream(music);
+    SetMusicVolume(music, (float)0.2);
+    music.looping = true;
+    *timePlayed = 0.0f;
+}
+
+void playMusic(Music music, float *timePlayed){
+    UpdateMusicStream(music);
+    SetMusicPitch(music, pitch);
+    *timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
 }
 
 char *mostrarTempo(float tempoRestante)
@@ -64,22 +74,13 @@ char *mostrarTempo(float tempoRestante)
 
 //Transitions
 
-void initialScreen()
+void initialScreen(Sound fxButton)
 {
-    Sound fxButton = LoadSound("resources/img/buttonfx.wav");
-
-    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
-    theme.looping = true;
-    float pitch = 1.0f;
-    PlayMusicStream(theme);
-    SetMusicVolume(theme, (float)0.2);
-    UpdateMusicStream(theme);
-
-    SetMusicPitch(theme, pitch);
-
     Texture2D background = LoadTexture("resources/img/unknown.png"); // background texture
-
     Texture2D button = LoadTexture("resources/img/btn-bg.png"); // Load button texture
+    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
+    setMusic(theme, &timePlayed);
+
     float frameHeight = (float)button.height / NUM_FRAMES;
     Rectangle sourceRec = {0, 0, (float)button.width, frameHeight};
 
@@ -92,6 +93,7 @@ void initialScreen()
 
     while (!WindowShouldClose() && !btnAction)
     {
+        playMusic(theme, &timePlayed);
         mousePoint = GetMousePosition();
         btnAction = false;
         if (CheckCollisionPointRec(mousePoint, btnBounds))
@@ -106,6 +108,7 @@ void initialScreen()
         else
             btnState = 0;
         sourceRec.y = btnState * frameHeight;
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawTexture(background, 0, 0, WHITE);
@@ -121,10 +124,14 @@ void initialScreen()
 
     UnloadTexture(button);
     UnloadTexture(background);
+    UnloadMusicStream(theme);
+    //UnloadSound(fxButton);  n dá para dar unload aqui, pois o som acaba antes da gente ouvir
 }
 
 void gameOver()
 {
+    Sound mario = LoadSound("resources/mario.wav");
+    PlaySound(mario);
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -133,12 +140,16 @@ void gameOver()
         DrawText("O AGIOTA PEGOU ACM,\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
         EndDrawing();
     }
+    UnloadSound(mario);
+    CloseAudioDevice();
+    CloseWindow();
 }
 
 void congratulations()
 {
     Texture2D daniel = LoadTexture("resources/personagens/dan-.png");
-
+    Sound ratinho = LoadSound("resources/ratinho.wav");
+    PlaySound(ratinho);
     while (!WindowShouldClose()) //tela de transição
     {
         DrawTexture(daniel, -30, 130, WHITE);
@@ -151,13 +162,20 @@ void congratulations()
         DrawText("O AGIOTA ZE DANIEL ESTA SATISFEITO", 140, 330, 25, WHITE);
         EndDrawing();
     }
+    UnloadSound(ratinho);
+    UnloadTexture(daniel);
 }
 
-void preGame(char *message)
+void preGame(char *message, Sound somBotao)
 {
+    Music transicao = LoadMusicStream("resources/musica_transicao.mp3");
+    setMusic(transicao, &timePlayed);
     int framesCounter = 0;
+
     while (!WindowShouldClose() && !IsKeyPressed(KEY_ENTER))
     {
+        playMusic(transicao, &timePlayed);
+
         if (IsKeyDown(KEY_SPACE))
             framesCounter += 8;
         else
@@ -172,6 +190,8 @@ void preGame(char *message)
 
         EndDrawing();
     }
+    UnloadMusicStream(transicao);
+    UnloadSound(somBotao); //fechando nessa função para dar tempo de tocar o som
 }
 
 //phases
@@ -237,9 +257,9 @@ int faseUm()
 
     setCamera(body);
 
-    Music theme = LoadMusicStream("resources/musica_inicial.mp3");
+  //  Music theme = LoadMusicStream("resources/musica_inicial.mp3");
 
-    playMusic(theme);
+   // playMusic(theme);
 
     while (!WindowShouldClose())
     {
@@ -677,11 +697,12 @@ int main()
 {
     SetConfigFlags(FLAG_MSAA_4X_HINT); // NOTE: Try to enable MSAA 4X
     InitWindow(screenWidth, screenHeight, "Daniel dá nota pra nois");
-    InitAudioDevice();
+    InitAudioDevice(); // Initialize audio device
+    Sound fxButton = LoadSound("resources/img/buttonfx.wav");
 
     SetTargetFPS(60);
 
-    initialScreen();
+    initialScreen(fxButton);
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
 
@@ -691,6 +712,7 @@ int main()
         gameOver();
     else congratulations();
 
+    congratulations(); 
     CloseAudioDevice();
     CloseWindow();
 }
