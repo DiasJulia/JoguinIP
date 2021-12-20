@@ -125,7 +125,7 @@ void initialScreen()
 
 void gameOver()
 {
-    while (!IsKeyPressed(KEY_ENTER) && !WindowShouldClose())
+    while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -133,8 +133,6 @@ void gameOver()
         DrawText("O AGIOTA PEGOU ACM,\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
         EndDrawing();
     }
-    CloseAudioDevice();
-    CloseWindow();
 }
 
 void congratulations()
@@ -175,6 +173,7 @@ void preGame(char *message)
         EndDrawing();
     }
 }
+
 //phases
 
 int faseUm()
@@ -673,6 +672,7 @@ int faseDois()
 }
 
 //main
+
 int main()
 {
     SetConfigFlags(FLAG_MSAA_4X_HINT); // NOTE: Try to enable MSAA 4X
@@ -685,13 +685,11 @@ int main()
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
 
-    /*if (!faseUm())
+    if (!faseUm())
        gameOver();
-
-    if (!faseDois())
-        gameOver();*/
-
-    congratulations();
+    else if (!faseDois())
+        gameOver();
+    else congratulations();
 
     CloseAudioDevice();
     CloseWindow();
