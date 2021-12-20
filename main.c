@@ -482,7 +482,9 @@ int faseDois()
     Texture2D runner = LoadTexture("resources/personagens/runner.png");
     Texture2D heart = LoadTexture("resources/img/heart.png");
     Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
-    Texture2D arvore = LoadTexture("resources/img/arvorecommamaco.png");
+    Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
+    Texture2D chao = LoadTexture("resources/img/chao-de-grama.png");
+    Texture2D bush = LoadTexture("resources/img/moita.png");
 
     int isShortened = 0;
     int timeElapsed = 0;
@@ -602,6 +604,25 @@ int faseDois()
         ClearBackground(GetColor(0x052c46ff));
         
         DrawTexture(jungle, body->position.x - 800, -(float)screenHeight - 100, WHITE);
+        DrawTexture(arvore, screenWidth + 500, (float)screenHeight - 450, WHITE);
+        DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
+        DrawTexture(bush,  screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 150, (float)screenHeight - 200, WHITE);
+        //DrawTexture(chao, screenWidth / 2.0f, (float)screenHeight, WHITE);
+        
+        /*PhysicsBody afloor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10)
+    PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
+    PhysicsBody aplataforma2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1850, (float)screenHeight - 180}, 80, 20, 10);
+    PhysicsBody aplataforma3 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2050, (float)screenHeight - 210}, 60, 20, 10);
+    PhysicsBody aplataforma4 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2250, (float)screenHeight - 240}, 40, 20, 10);
+    PhysicsBody aplataforma7 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3300, (float)screenHeight - 180}, 120, 20, 30);
+    PhysicsBody aplataforma9 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3950, (float)screenHeight - 120}, 800, 20, 30);
+    PhysicsBody api = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 240}, 600, 20, 10);
+    PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 400}, 50, 200, 10);
+    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 280}, 50, 200, 30);
+    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 280}, 50, 200, 30);
+    PhysicsBody abox = CreatePhysicsBodyRectangle((Vector2){screenWidth + 600, (float)screenHeight - 240}, 70, 260, 30);
+    PhysicsBody abox2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1000, (float)screenHeight - 240}, 70, 260, 30);
+    PhysicsBody abox3 = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 50, (float)screenHeight - 100}, 100, 100, 30);*/
         
         
 
