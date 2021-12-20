@@ -42,7 +42,7 @@ void setCamera(PhysicsBody body)
     camera.target = body->position;
     camera.offset = (Vector2){screenWidth / 2.0f, screenHeight / 2.0f + 50};
     camera.rotation = 0.0f;
-    camera.zoom = 0.5f;
+    camera.zoom = 0.1f;
 }
 
 void setMusic(Music music, float *timePlayed)
@@ -490,6 +490,7 @@ int faseDois()
     Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
     Texture2D chao = LoadTexture("resources/img/grassfloor.png");
     Texture2D bush = LoadTexture("resources/img/moita.png");
+    Texture2D chao3 = LoadTexture("resources/img/grassfloor9.png");
     Music indiana = LoadMusicStream("resources/indiana.mp3");
     setMusic(indiana, &timePlayed);
 
@@ -616,6 +617,7 @@ int faseDois()
         DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
         DrawTexture(bush,  screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 150, (float)screenHeight - 200, WHITE);
         DrawTexture(chao, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2 + 800, (float)screenHeight - 50, WHITE);
+        DrawTexture(chao3, screenWidth + 3950 - 400, (float)screenHeight - 120, WHITE);
         
         /*PhysicsBody afloor = CreatePhysicsBodyRectangle((Vector2){screenWidth / 2.0f, (float)screenHeight}, (float)screenWidth * 2 + 2000, 100, 10)
     PhysicsBody aplataforma = CreatePhysicsBodyRectangle((Vector2){screenWidth + 1600, (float)screenHeight - 150}, 100, 20, 10);
