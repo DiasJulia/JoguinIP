@@ -421,7 +421,6 @@ int main(void)
 
                     EndDrawing();
                 }
-                UnloadSound(mario);
                 fase = -1;
             }
 
