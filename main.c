@@ -139,14 +139,18 @@ void gameOver()
 
 void congratulations()
 {
+    Texture2D daniel = LoadTexture("resources/personagens/dan-.png");
+
     while (!WindowShouldClose()) //tela de transição
     {
+        DrawTexture(daniel, -30, 130, WHITE);
+
         BeginDrawing();
         ClearBackground(BLACK);
         DrawText("CONGRATULATIONS!!", 160, 85, 45, WHITE);
         DrawText("O PAGAMENTO FOI FEITO", 190, 200, 30, WHITE);
-        DrawText("COM SUCESSO!!", 280, 230, 30, WHITE);
-        DrawText("PRESS [ENTER] to RESTART!", 205, 330, 25, WHITE);
+        DrawText("COM SUCESSO!!", 280, 230, 30, YELLOW);
+        DrawText("O AGIOTA ZE DANIEL ESTA SATISFEITO", 140, 330, 25, WHITE);
         EndDrawing();
     }
 }
@@ -681,11 +685,11 @@ int main()
 
     preGame("ACM se encontra em apuros e precisa de sua ajuda.\nO agiota Ze Daniel perdeu a calma com os atrasos do pagamento\ne se encontra cobrando o imediato pagamento.\nGuie ACM e efetue o pagamento antes que o tempo acabe.\nCuidado, o caminho consegue ser tortuoso e incerto.\n");
 
-    if (!faseUm())
+    /*if (!faseUm())
        gameOver();
 
     if (!faseDois())
-        gameOver();
+        gameOver();*/
 
     congratulations();
 
