@@ -130,16 +130,19 @@ void initialScreen(Sound fxButton)
 
 void gameOver()
 {
+    Texture2D acmmorreu = LoadTexture("resources/img/acmmorreu.png");
     Sound mario = LoadSound("resources/mario.wav");
     PlaySound(mario);
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("VOCE PERDEU", 165, 130, 75, WHITE);
-        DrawText("Acm não efetuou o pagamento a tempo\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 210, 320, 25, WHITE);
+        DrawTexture(acmmorreu, 50, 0, RED);
+        DrawText("VOCE PERDEU", 10, 10, 70, WHITE);
+        DrawText("Acm não efetuou o pagamento a tempo\nAGORA NAO TEMOS MAIS PROFESSOR DE IP", 90, 350, 25, WHITE);
         EndDrawing();
     }
+    UnloadTexture(acmmorreu);
     UnloadSound(mario);
     CloseAudioDevice();
     CloseWindow();
@@ -147,7 +150,7 @@ void gameOver()
 
 void congratulations()
 {
-    Texture2D daniel = LoadTexture("resources/personagens/dan-.png");
+    Texture2D daniel = LoadTexture("resources/personagens/agiota.png");
     Sound ratinho = LoadSound("resources/ratinho.wav");
     PlaySound(ratinho);
     while (!WindowShouldClose()) //tela de transição
@@ -156,10 +159,10 @@ void congratulations()
 
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("CONGRATULATIONS!!", 160, 85, 45, WHITE);
+        DrawText("CONGRATULATIONS!!", 160, 85, 45, GOLD);
         DrawText("O PAGAMENTO FOI FEITO", 190, 200, 30, WHITE);
-        DrawText("COM SUCESSO!!", 280, 230, 30, YELLOW);
-        DrawText("O AGIOTA ZE DANIEL ESTA SATISFEITO", 140, 330, 25, WHITE);
+        DrawText("COM SUCESSO!!", 280, 230, 30, WHITE);
+        DrawText("O AGIOTA ZE DANIEL\n ESTA SATISFEITO", 270, 330, 25, YELLOW);
         EndDrawing();
     }
     UnloadSound(ratinho);
@@ -179,13 +182,13 @@ void preGame(char *message, Sound somBotao)
         if (IsKeyDown(KEY_SPACE))
             framesCounter += 8;
         else
-            framesCounter += 5;
+            framesCounter += 2;
 
         BeginDrawing();
 
         ClearBackground(BLACK);
 
-        DrawText(TextSubtext(message, 0, framesCounter / 10), 30, 50, 23.12, MAROON);
+        DrawText(TextSubtext(message, 0, framesCounter / 10), 30, 50, 23.12, YELLOW);
         DrawText("[ESPAÇO] DAR O GAS E [ENTER] PARA JOGAR!", 171, 300, 20, LIGHTGRAY);
 
         EndDrawing();
@@ -487,7 +490,7 @@ int faseDois()
     Texture2D runner = LoadTexture("resources/personagens/runner9.png");
     Texture2D heart = LoadTexture("resources/img/heart.png");
     Texture2D jungle = LoadTexture("resources/img/selvamaismaiscerta.png"); //background da jungle
-    Texture2D arvore = LoadTexture("resources/img/macaconaarvore2.png");
+    Texture2D arvore = LoadTexture("resources/img/arvore.png");
     Texture2D chao = LoadTexture("resources/img/grassfloor.png");
     Texture2D bush = LoadTexture("resources/img/moita.png");
     Texture2D chao3 = LoadTexture("resources/img/grassfloor9.png");
@@ -497,6 +500,7 @@ int faseDois()
     Texture2D plataforma3 = LoadTexture("resources/img/piso3.png");
     Texture2D plataforma4 = LoadTexture("resources/img/piso4.png");
     Texture2D plataforma5 = LoadTexture("resources/img/piso5.png");
+    Texture2D agiota = LoadTexture("resources/personagens/dan-.png");
     Music indiana = LoadMusicStream("resources/indiana.mp3");
     setMusic(indiana, &timePlayed);
 
@@ -554,6 +558,20 @@ int faseDois()
         {
             free(timer);
             UnloadTexture(runner);
+            UnloadTexture(arvore);
+            UnloadTexture(heart);
+            UnloadTexture(jungle);
+            UnloadTexture(chao);
+            UnloadTexture(chao2);
+            UnloadTexture(chao3);
+            UnloadTexture(bush);
+            UnloadTexture(plataforma1);
+            UnloadTexture(plataforma2);
+            UnloadTexture(plataforma3);
+            UnloadTexture(plataforma4);
+            UnloadTexture(plataforma5);
+            UnloadTexture(agiota);
+            UnloadMusicStream(indiana);
 
             int bodiesCount = GetPhysicsBodiesCount();
             for (int i = 0; i < bodiesCount; i++)
@@ -603,6 +621,20 @@ int faseDois()
         {
             free(timer);
             UnloadTexture(runner);
+            UnloadTexture(arvore);
+            UnloadTexture(heart);
+            UnloadTexture(jungle);
+            UnloadTexture(chao);
+            UnloadTexture(chao2);
+            UnloadTexture(chao3);
+            UnloadTexture(bush);
+            UnloadTexture(plataforma1);
+            UnloadTexture(plataforma2);
+            UnloadTexture(plataforma3);
+            UnloadTexture(plataforma4);
+            UnloadTexture(plataforma5);
+            UnloadTexture(agiota);
+            UnloadMusicStream(indiana);
 
             int bodiesCount = GetPhysicsBodiesCount();
             for (int i = 0; i < bodiesCount; i++)
@@ -619,11 +651,11 @@ int faseDois()
 
         ClearBackground(DARKGREEN);
         DrawTexture(jungle, body->position.x - 800, -(float)screenHeight - 100, WHITE);
-        DrawTexture(arvore, screenWidth + 500, (float)screenHeight - 450, WHITE);
-        DrawTexture(arvore, screenWidth + 900, (float)screenHeight - 450, WHITE);
-        DrawTexture(arvore, screenWidth + 2715 -70, (float)screenHeight - 360 -100, WHITE);
-        DrawTexture(arvore, screenWidth + 4165 -70, (float)screenHeight - 440 -100, WHITE);
-        DrawTexture(arvore, screenWidth + 3885 -70, (float)screenHeight - 440 -100, WHITE);
+        DrawTexture(arvore, screenWidth + 340, (float)screenHeight - 620, WHITE); //-160 -170
+        DrawTexture(arvore, screenWidth + 900 - 160, (float)screenHeight - 450 -170, WHITE);
+        DrawTexture(arvore, screenWidth + 2715 -70 - 160, (float)screenHeight - 360 -100 - 170, WHITE);
+        DrawTexture(arvore, screenWidth + 4165 - 70 - 160, (float)screenHeight - 440 - 100 - 170, WHITE);
+        DrawTexture(arvore, screenWidth + 3885 - 70 - 160, (float)screenHeight - 440 - 100 - 170, WHITE);
         DrawTexture(bush,  screenWidth / 2.0f + ((float)screenWidth * 2 + 2000)/2 - 150, (float)screenHeight - 200, WHITE);
         DrawTexture(chao, screenWidth / 2.0f - ((float)screenWidth * 2 + 2000)/2 + 800, (float)screenHeight - 50, WHITE);
         DrawTexture(chao3, screenWidth + 3950 - 400, (float)screenHeight - 120, WHITE);
@@ -633,10 +665,8 @@ int faseDois()
         DrawTexture(plataforma3, screenWidth + 2020, (float)screenHeight - 230, WHITE);
         DrawTexture(plataforma4, screenWidth + 2240, (float)screenHeight - 260, WHITE);
         DrawTexture(plataforma5, screenWidth + 3240, (float)screenHeight - 205, WHITE);
-/*     PhysicsBody abloco = CreatePhysicsBodyRectangle((Vector2){screenWidth + 2750, (float)screenHeight - 230}, 70, 260, 10);
-    PhysicsBody acaixa = CreatePhysicsBodyRectangle((Vector2){screenWidth + 4200, (float)screenHeight - 310}, 70, 260, 30);
-    PhysicsBody acaixa2 = CreatePhysicsBodyRectangle((Vector2){screenWidth + 3920, (float)screenHeight - 310}, 70, 260, 30); */
-        
+        DrawTexture(agiota, screenWidth + 4300, (float)screenHeight - 540, WHITE);
+        //screenWidth + 4300
 
         for (int i = 0; i < lifes; i++)
             DrawTexture(heart, body->position.x - 800 + (i + 1) * 50, body->position.y - 550, WHITE);
@@ -714,6 +744,7 @@ int faseDois()
     UnloadTexture(plataforma4);
     UnloadTexture(plataforma5);
     UnloadTexture(runner);
+    UnloadTexture(agiota);
     UnloadMusicStream(indiana);
 
     bodiesCount = GetPhysicsBodiesCount();
@@ -745,7 +776,6 @@ int main()
  
      if (!faseDois())
         gameOver();
-
 
     congratulations(); 
     CloseAudioDevice();
